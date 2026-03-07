@@ -57,7 +57,7 @@ export const theme: ThemeUserConfig = {
   /** Configure the footer of your site. */
   footer: {
     // Year format
-    year: `© ${new Date().getFullYear()}`,
+    year: `© 2025 - ${new Date().getFullYear()}`,
     // year: `© 2019 - ${new Date().getFullYear()}`,
     links: [
       // Registration link
@@ -74,7 +74,7 @@ export const theme: ThemeUserConfig = {
       // Privacy Policy link
       {
         title: 'Site Policy',
-        link: '/terms/list',
+        link: '/terms/',
         pos: 2 // position set to 2 will be appended to copyright line
       }
     ],
@@ -87,9 +87,10 @@ export const theme: ThemeUserConfig = {
   content: {
     /** External links configuration */
     externalLinks: {
-      content: ' ↗',
+      content: '',
       /** Properties for the external links element */
       properties: {
+        class: 'custom-externalLinks',
         style: 'user-select:none'
       }
     },
@@ -158,6 +159,8 @@ export const integ: IntegrationUserConfig = {
     enable: true,
     // Server service link
     server: 'https://comments.kusanali.top',
+    // Show meta info for comments
+    showMeta: true,
     // Refer https://waline.js.org/en/guide/features/emoji.html
     emoji: ['bmoji', 'weibo'],
     // Refer https://waline.js.org/en/reference/client/props.html

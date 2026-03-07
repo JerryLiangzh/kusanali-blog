@@ -3,7 +3,7 @@ import config from '@/site-config'
 
 import '@waline/client/style'
 
-import { cn } from 'packages/pure/utils'
+import { cn } from 'astro-pure/utils'
 
 const { class: className } = Astro.props
 ---
@@ -43,11 +43,13 @@ const { class: className } = Astro.props
       )
 
       walineInit({
-        el: '#waline',
-        serverURL: walineConfig.server || 'https://comments.kusanali.top',
+        el: 'comment-component #waline',
+        serverURL: walineConfig.server || '',
         emoji,
         reaction: ['/icons/heart-item.svg'],
         turnstileKey: "0x4AAAAAACAJi1zEVI1r-dHw",
+        pageview: true,
+        comment: true,
         ...walineConfig.additionalConfigs
       })
     }
@@ -55,6 +57,12 @@ const { class: className } = Astro.props
 
   if (walineConfig.enable) customElements.define('comment-component', Comment)
 </script>
+
+{
+  config.integ.waline.showMeta &&(
+    <style> #waline :global(.wl-meta) { display: none; } </style>
+  )
+}
 
 <style>
   /* Basic theme */
@@ -106,9 +114,6 @@ const { class: className } = Astro.props
   }
   #waline :global(a) {
     display: inline-block;
-  }
-  #waline :global(.wl-item, .wl-card-item) {
-    overflow: hidden;
   }
 
   /* Reaction buttons */

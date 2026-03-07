@@ -8,9 +8,9 @@ import remarkParse from 'remark-parse'
 import remarkRehype from 'remark-rehype'
 import { unified } from 'unified'
 import { visit } from 'unist-util-visit'
-import config from 'virtual:config'
 
 import { getBlogCollection, sortMDByDate } from 'astro-pure/server'
+import config from 'virtual:config'
 
 // Get dynamic import of images as a map collection
 const imagesGlob = import.meta.glob<{ default: ImageMetadata }>(
@@ -23,7 +23,7 @@ const renderContent = async (post: CollectionEntry<'blog'>, site: URL) => {
     /**
      * @param {Root} tree
      */
-    return async function (tree: Root) {
+    return async (tree: Root) => {
       const promises: Promise<void>[] = []
       visit(tree, 'image', (node) => {
         if (node.url.startsWith('/images')) {
@@ -68,14 +68,38 @@ const GET = async (context: AstroGlobal) => {
     description: config.description,
     site: import.meta.env.SITE,
     items: await Promise.all(
-      allPostsByDate.map(async (post) => ({
-        pubDate: post.data.publishDate,
-        link: `/blog/${post.id}`,
-        customData: `<h:img src="${typeof post.data.heroImage?.src === 'string' ? post.data.heroImage?.src : post.data.heroImage?.src.src}" />
-          <enclosure url="${typeof post.data.heroImage?.src === 'string' ? post.data.heroImage?.src : post.data.heroImage?.src.src}" />`,
-        content: await renderContent(post, siteUrl),
-        ...post.data
-      }))
+      allPostsByDate.map(async (post) => {
+        const lastDate = post.data.updatedDate ?? post.data.publishDate
+        const updateTimestamp = lastDate ? `?u=${lastDate.getTime()}` : ''
+        const guid = `${siteUrl.origin}/blog/${post.id}${updateTimestamp}`
+
+        // --- 新增：处理头图逻辑 ---
+        let heroImageUrl = '';
+        if (post.data.heroImage) {
+          // 如果是字符串直接用，如果是 Astro 优化后的对象则取 .src
+          heroImageUrl = typeof post.data.heroImage.src === 'string' 
+            ? post.data.heroImage.src 
+            : post.data.heroImage.src.src;
+          // 如果是相对路径，拼上完整的 site 域名
+          if (heroImageUrl.startsWith('/')) {
+            heroImageUrl = `${siteUrl.origin}${heroImageUrl}`;
+          }
+        }
+        // --- 只有当图片存在时才生成相关的 XML 标签 ---
+        const imageTags = heroImageUrl
+          ? `<h:img src="${heroImageUrl}" /><enclosure url="${heroImageUrl}" length="0" type="image/jpeg" />` 
+          : '';
+
+        return{
+          pubDate: post.data.publishDate,
+          link: `/blog/${post.id}`,
+          guid: guid,
+          customData: imageTags,
+          content: await renderContent(post, siteUrl),
+          ...post.data
+        }
+        
+      })
     )
   })
 }

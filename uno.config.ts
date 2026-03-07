@@ -35,7 +35,7 @@ const typographyConfig: TypographyOptions = {
   cssExtend: {
     // Title
     'h2,h3,h4,h5,h6': {
-      'scroll-margin-top': '4rem'
+      'scroll-margin-top': '2rem' //Original:4rem
     },
     'h1>a,h2>a,h3>a,h4>a,h5>a,h6>a': {
       'margin-inline-start': '0.75rem',
@@ -86,7 +86,7 @@ const typographyConfig: TypographyOptions = {
       'border-inline-start-color': 'inherit',
       'border-radius': `calc(1.5 * ${radius})`,
       'padding-inline': '1.6rem',
-      'box-shadow': '0 5px 0 ' + bgMuted,
+      'box-shadow': `0 5px 0 ${bgMuted}`,
       ...(typographyCustom.blockquoteStyle === 'normal' && { 'font-style': 'normal' })
     },
     'blockquote::after': {

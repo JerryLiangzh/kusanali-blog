@@ -4,7 +4,7 @@ layout: '@/layouts/IndividualPage.astro'
 title: 'Terms and Conditions'
 description: 'Last updated: 2025-08-30'
 language: 'En'
-back: '/terms/list'
+back: '/terms/'
 ---	 	 
 <p>1. <b>Introduction</b></p>	 	 
 <p>Welcome to <b>Kusanali Blog</b> (“Company”, “we”, “our”, “us”)!</p>	 	 

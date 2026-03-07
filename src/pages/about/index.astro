@@ -1,5 +1,5 @@
 ---
-import { Collapse, Spoiler, Timeline } from 'packages/pure/components/user'
+import { Collapse, Spoiler, Timeline } from 'astro-pure/user'
 import PageLayout from '@/layouts/CommonPage.astro'
 import Substats from '@/components/about/Substats.astro'
 
@@ -13,7 +13,7 @@ const headings = [
 <PageLayout title='About' {headings} comment>
   <p>Chemistry student / Entry-level researcher</p>
   <p>
-    你好，我是Jerry Liangzh，北师大化学专业本科生，目前的研究兴趣是金属基电催化剂的结构设计、精准合成及性能、机理研究。
+    你好，我是Jerry Liangzh。
   </p>
   <p>
   <Spoiler>枣椰蜜糖！</Spoiler>
@@ -22,16 +22,17 @@ const headings = [
   {/* general-talk */}
   <h2 id='hobbies'>Hobbies</h2>
   <ul>
-    <li>Music: Wide music preferences</li>
+    <li>Music: wide music preferences</li>
     <li>
-      Games: Mihoyo games series, Minecraft, Counter-Strike 2, Dead Cells and so on
+      Games: wide preferences, such as mihoyo games series, Minecraft, Counter-Strike 2, Dead Cells, Slay the Spire and Strinova
     </li>
-    <li>Reading: Currently reading <i>Анна Каренина</i></li>
+    <li>Reading: Currently reading The Grapes of Wrath and 苏霍姆林斯基选集（五卷本）</li>
+    <li>Sports: badminton and running; watching Formula 1 Grand Prixs and Counter-Strike 2 matches</li>
+    <li>Research interests: the preparation, synthesis, and performance study of metal-based electrocatalysts</li>
   </ul>
 
   {/* social-networks */}
   <h2 id='social-networks'>Social Networks</h2>
-  <p>你可以在以下平台找到我：</p>
   <Substats
     stats={[
       {
@@ -47,7 +48,6 @@ const headings = [
         color: '#0084ff',
         link: 'https://www.zhihu.com/people/73-11-72-45-65',
         text: 'followers',
-        //api: 'zhihu/73-11-72-45-65'
         count: 20
       },
       {
@@ -56,7 +56,6 @@ const headings = [
         color: '#fe7398',
         link: 'https://space.bilibili.com/1314737513',
         text: 'followers',
-        //api: 'bilibili/1314737513'
         count: 7
       },
       {
@@ -76,16 +75,6 @@ const headings = [
   <Timeline
     events={[
       {
-        date: '2025-12-06',
-        content:
-          'Update to <a href="https://github.com/cworld1/astro-theme-pure/releases/tag/v4.1.1" target="_blank">Astro Theme Pure v4.1.1</a>'
-      },
-      {
-        date: '2025-12-03',
-        content:
-          'Update to <a href="https://github.com/cworld1/astro-theme-pure/releases/tag/v4.1.0" target="_blank">Astro Theme Pure v4.1.0</a>'
-      },
-      {
         date: '2025-11-12',
         content:
           'Update to <a href="https://github.com/cworld1/astro-theme-pure/releases/tag/v4.0.9" target="_blank">Astro Theme Pure v4.0.9</a> and turn from Template to Fork'
@@ -104,7 +93,6 @@ const headings = [
   />
   </Collapse>
 
-  <p>本站基于以下项目/服务提供商的资源和技术支持：</p>
   <ul>
     <li>域名: <a href='https://www.aliyun.com/' target='_blank'>Ali Cloud</a></li>
     
@@ -118,16 +106,12 @@ const headings = [
 
     <li>评论系统：<a href='https://waline.js.org' target='_blank'>Waline</a> + <a 
       href='https://vercel.com' target='_blank'>Vercel</a> + <a 
-      href='https://www.leancloud.app' target='_blank'>LeanCloud</a> + <a
-      href='https://cn.cravatar.com' target='_blank'>Cravatar</a>
+      href='https://cloud.mongodb.com' target='_blank'>MongoDB Cloud</a>
     </li>
 
-    <li>访问量统计：<a href='https://waline.js.org/' target='_blank'>Waline</a> + <a
+    <li>统计：<a href='https://waline.js.org/' target='_blank'>Waline</a> + <a
         href='https://umami.is/' target='_blank'>Umami</a>
     </li>
 
-    <li>
-      粉丝数统计：<a href='https://github.com/spencerwooo/substats' target='_blank'>Substats</a>
-    </li>
   </ul>
 </PageLayout>

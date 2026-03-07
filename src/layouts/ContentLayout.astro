@@ -1,14 +1,14 @@
 ---
-import { BackToTop } from 'packages/pure/components/pages'
-import type { SiteMeta } from 'packages/pure/types'
-import { Button, Icon } from 'packages/pure/components/user'
-import { cn } from 'packages/pure/utils'
+import { BackToTop } from 'astro-pure/components/pages'
+import type { SiteMeta } from 'astro-pure/types'
+import { Button, Icon } from 'astro-pure/user'
+import { cn } from 'astro-pure/utils'
 import PageLayout from '@/layouts/BaseLayout.astro'
 import { integ } from '@/site-config'
 
 interface Props {
   meta: SiteMeta
-  highlightColor: string
+  highlightColor?: string
   back?: string
 }
 
@@ -38,12 +38,12 @@ const { meta, highlightColor, back = '/', ...props } = Astro.props
       <div id='content-header' class='animate'>
         <slot name='header' />
       </div>
-
+      <!-- Original:mt-8 -->
       {/* Content */}
       <div
         id='content'
         class={cn(
-          'max-w-none animate mt-8 md:min-w-[45ch] overflow-x-hidden',
+          'max-w-none animate mt-2 md:min-w-[45ch] overflow-x-hidden',
           integ.typography.class
         )}
       >

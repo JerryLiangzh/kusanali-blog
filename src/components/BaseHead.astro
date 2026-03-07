@@ -1,21 +1,21 @@
 ---
 import { Font } from 'astro:assets'
-import config from 'virtual:config'
 
-import { prod } from 'packages/pure/utils/server'
-import type { SiteMeta } from 'packages/pure/types'
+import { prod } from 'astro-pure/server'
+import type { SiteMeta } from 'astro-pure/types'
+import config from 'virtual:config'
 
 type Props = SiteMeta
 
 const { articleDate, description, ogImage, title } = Astro.props
 
 const siteTitle = `${title} ${config.titleDelimiter} ${config.title}`
-const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+const canonicalURL = new URL(Astro.url.pathname.replace(/\.html$/, '').replace(/\/$/, ''), Astro.site)
 const socialImageURL = new URL(ogImage ? ogImage : config.socialCard, Astro.url).href
 ---
 
 <meta charset='utf-8' />
-<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no, viewport-fit=cover' name='viewport' />
 <meta content='IE=edge' http-equiv='X-UA-Compatible' />
 <title>{siteTitle}</title>
 
@@ -96,3 +96,6 @@ const socialImageURL = new URL(ogImage ? ogImage : config.socialCard, Astro.url)
     </script>
   )
 }
+
+<!-- Umami -->
+<script is:inline defer src="https://statistics.kusanali.top/KusanaliBlogTracker" data-website-id="56d083cc-cd52-4c88-a2ba-9d917df16400"></script>

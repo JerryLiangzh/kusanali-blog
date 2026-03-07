@@ -4,7 +4,7 @@ layout: '@/layouts/IndividualPage.astro'
 title: 'Disclaimer'
 description: 'Last updated: 2025-08-30'
 language: 'En'
-back: '/terms/list'
+back: '/terms/'
 --- 	 	 
 <p><b>WEBSITE DISCLAIMER</b></p>	 	 
 <p>The information provided by <b>Kusanali Blog</b> (“Company”, “we”, “our”, “us”) on <b>kusanali.top</b> (the “Site”) is for general informational purposes only. All information on the Site is provided in good faith, however we make no representation or warranty of any kind, express or implied, regarding the accuracy, adequacy, validity, reliability, availability, or completeness of any information on the Site.</p>	 	 

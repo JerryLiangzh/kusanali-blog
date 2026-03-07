@@ -6,7 +6,7 @@ import rehypeKatex from 'rehype-katex'
 import remarkMath from 'remark-math'
 
 // Local integrations
-import rehypeAutolinkHeadings from './src/plugins/rehype-auto-link-headings'
+import rehypeAutolinkHeadings from './src/plugins/rehype-auto-link-headings.ts'
 // Shiki
 import {
   addCollapse,
@@ -14,13 +14,13 @@ import {
   addLanguage,
   addTitle,
   updateStyle
-} from './src/plugins/shiki-custom-transformers'
+} from './src/plugins/shiki-custom-transformers.ts'
 import {
   transformerNotationDiff,
   transformerNotationHighlight,
   transformerRemoveNotationEscape
-} from './src/plugins/shiki-offical/transformers'
-import config from './src/site.config'
+} from './src/plugins/shiki-official/transformers.ts'
+import config from './src/site.config.ts'
 
 // https://astro.build/config
 export default defineConfig({
@@ -36,6 +36,10 @@ export default defineConfig({
     allowedHosts: ['kusanali.top'] 
   },
   
+  // Refer to https://docs.astro.build/en/reference/configuration-reference/#buildformat
+  build: {
+    format: 'file'
+  },
 
   // [Adapter]
   // https://docs.astro.build/en/guides/deploy/
@@ -76,15 +80,25 @@ export default defineConfig({
         dark: 'github-dark'
       },
       transformers: [
+        // Two copies of @shikijs/types (one under node_modules
+        // and another nested under @astrojs/markdown-remark → shiki).
         // Official transformers
+        // @ts-ignore this happens due to multiple versions of shiki types
         transformerNotationDiff(),
+        // @ts-ignore this happens due to multiple versions of shiki types
         transformerNotationHighlight(),
+        // @ts-ignore this happens due to multiple versions of shiki types
         transformerRemoveNotationEscape(),
         // Custom transformers
+        // @ts-ignore this happens due to multiple versions of shiki types
         updateStyle(),
+        // @ts-ignore this happens due to multiple versions of shiki types
         addTitle(),
+        // @ts-ignore this happens due to multiple versions of shiki types
         addLanguage(),
+        // @ts-ignore this happens due to multiple versions of shiki types
         addCopyButton(2000), // timeout in ms
+        // @ts-ignore this happens due to multiple versions of shiki types
         addCollapse(15) // max lines that needs to collapse
       ]
     }

@@ -5,7 +5,7 @@ publishDate: 2025-09-19
 updatedDate: 2025-09-20
 description: 'First Formal Blog: 2025所余的时间里本博客将如何发展？'
 author: 'Jerry Liangzh'
-tags: ["2025", "博客规划"]
+tags: ["建站"]
 featured: false
 
 ---

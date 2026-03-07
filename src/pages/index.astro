@@ -1,10 +1,10 @@
 ---
 import { Image } from 'astro:assets'
 
-import { Quote } from 'packages/pure/components/advanced'
-import { PostPreview } from 'packages/pure/components/pages'
-import { getBlogCollection, sortMDByDate } from 'packages/pure/utils/server'
-import { Button, Card, Icon, Label } from 'packages/pure/components/user'
+import { Quote } from 'astro-pure/advanced'
+import { PostPreview } from 'astro-pure/components/pages'
+import { getBlogCollection, sortMDByDate } from 'astro-pure/server'
+import { Button, Card, Icon, Label } from 'astro-pure/user'
 import PageLayout from '@/layouts/BaseLayout.astro'
 import Section from '@/components/home/Section.astro'
 import avatar from '@/assets/avatar.png'
@@ -49,7 +49,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
       <Section title='About'>
         <p class='text-muted-foreground'>Chemistry student / Entry-level researcher</p>
         <p class='text-muted-foreground'>
-          你好，我是Jerry Liangzh，北师大化学专业本科生，目前的研究兴趣是金属基电催化剂的结构设计、精准合成及性能、机理研究。
+          你好，我是Jerry Liangzh。
         </p>
         <Button title='More about me' class='w-fit self-end' href='/about' variant='ahead' />
       </Section>
@@ -59,7 +59,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
             <ul class='flex flex-col gap-y-1.5 sm:gap-y-2'>
               {allPostsByDate.map((p) => (
                 <li class='flex flex-col gap-x-2 sm:flex-row'>
-                  <PostPreview post={p} detailed={p.data.featured || false} showMeta={false}/>
+                  <PostPreview post={p} detailed={p.data.featured || false} showBlogMeta={false}/>
                 </li>
               ))}
             </ul>
