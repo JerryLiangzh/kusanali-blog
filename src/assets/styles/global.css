@@ -311,7 +311,7 @@ body::-webkit-scrollbar {
 }
 
 /* Memorial mode */
-.gray-filter {
+/*.gray-filter {
   filter: grayscale(100%);
   -webkit-filter: grayscale(100%);
-}
+}*/
