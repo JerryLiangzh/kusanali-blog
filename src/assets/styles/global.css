@@ -309,3 +309,9 @@ body::-webkit-scrollbar {
   text-decoration-color: #3b82f6 !important;
   text-underline-offset: 4px !important;
 }
+
+/* Memorial mode */
+.gray-filter {
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
+}
