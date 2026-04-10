@@ -2,80 +2,44 @@
 
 import PageLayout from '@/layouts/CommonPage.astro'
 import ProjectSection from '@/components/projects/ProjectSection.astro'
-import AcademicSection from '@/components/projects/AcademicSection.astro'
+//import AcademicSection from '@/components/projects/AcademicSection.astro'
 
 const headings = [
-  { depth: 2, slug: 'academic-papers', text: 'Academic Papers' },
-  { depth: 2, slug: 'patents', text: 'Patents' },
+  { depth: 2, slug: 'projects', text: 'Projects' },
+  { depth: 2, slug: 'mods', text: 'Mods' },
   { depth: 2, slug: 'others', text: 'Others' },
 ]
 ---
 <PageLayout title='Projects' {headings} view>
-  <h2 id='academic-papers'>Academic Papers</h2>
-  <AcademicSection
+  <h2 id='projects'>Projects</h2>
+  <ProjectSection
     projects={[
       {
-        name:'High-entropy materials for electrocatalytic oxygen reduction reaction',
-        description:`This review provides a comprehensive overview of recent advancements in HEMs for ORR, beginning with an 
-                    introduction to diverse classes of high-entropy systems…It then delves into the underlying structure–property 
-                    correlations within these systems, highlighting how entropy-driven design strategies influence their 
-                    electrocatalytic behavior. Subsequently, the latest progress in applying various high-entropy systems to the 
-                    ORR is critically analyzed, with a particular emphasis on elucidating the structure–activity relationships 
-                    that govern catalytic performance. Finally, we outline key challenges and future directions, offering 
-                    perspectives on the rational design of next-generation high-entropy materials for electrocatalytic ORR and 
-                    related applications.`,
-        journal: 'Journal of Materials Chemistry A (J. Mater. Chem. A)',
-        authors: ['First Author'],
-        year: '2025',
-        tags: ['Review Article', 'Published', 'DOI: 10.1039/d5ta03392f'],
-        links:[{href:'https://doi.org/10.1039/d5ta03392f'}]
-      },
-      {
-        name:'Iridium-based electrocatalysts for the hydrogen oxidation reaction toward alkaline exchange membrane fuel cells',
-        description:`This review comprehensively summarizes recent advancements in the design strategies 
-                    of advanced electrocatalysts for the alkaline HOR, including alloying effects, interface engineering,
-                    lattice strain, and phase engineering, focusing on their critical roles in modulating the electronic structure
-                    and coordination environments. Finally, the review discusses current challenges and offers perspectives 
-                    on the future directions for improving the performance of Ir-based electrocatalysts.`, 
-        journal: 'Journal of Materials Chemistry A (J. Mater. Chem. A)',
-        authors: ['Third Author'],
-        year: '2025',
-        tags: ['Review Article', 'Published', 'DOI: 10.1039/d4ta07777f'],
-        links:[{href:'https://doi.org/10.1039/d4ta07777f'}]
-      },
-      {
-        name:'Synergetic catalysis between rare earth-doped g-C₃N₄ and Pt toward enhanced hydrogen oxidation',
-        description:`We introduce a novel synergistic catalysis system composed of single rare earth atoms (such as Tb, Ho, Gd, 
-                    and Er) doped into graphitic carbon nitride supported on Pt nanoparticles (GCN-RE-Pt) to balance the tradeoff 
-                    between HBE and OHBE, thereby enhancing HOR kinetics. In this system, the single rare earth atoms could 
-                    promote the adsorption of hydroxyl species, facilitating hydrogen oxidation and water generation, and induce 
-                    a surface charge redistribution in GCN, which modulates the electronic structure of the Pt active centers and 
-                    optimizes the binding energy of adsorbed hydrogen.`,
-        journal: 'Nano Research',
-        year: '2025',
-        tags: ['Research Article', 'Published', 'DOI: 10.26599/NR.2025.94907349'],
-        links:[{href:'https://doi.org/10.26599/NR.2025.94907349'}]
+        name:'GKD Subscription',
+        description:'A subscription source for GKD. UNDER DEVELOPMENT.',
+        links:[{type:'github', href:'https://github.com/JerryLiangzh/gkd-subscription'}]
       }
     ]}
   />
 
-  <h2 id='patents'>Patents</h2>
-  <AcademicSection
-    class='my-2'
+  <h2 id='mods'>Mods</h2>
+  <ProjectSection
     projects={[
       {
-        name:'一种富含高催化活性面的钯纳米颗粒及其制备方法和应用',
-        description:'',
-        tags: ['实质性审查阶段', '申请号：2024108711344'],
-        links:[{href:'http://epub.cnipa.gov.cn/patent/CN118832179A'}]
+        name:'StrinovaSpire',
+        description:'A Strinova-themed Mod of Slay the Spire. UNDER DEVELOPMENT.',
+        links:[{type:'github', href:'https://github.com/JerryLiangzh/StrinovaSpire'}]
       }
     ]}
   />
 
   <h2 id='others'>Others</h2>
   <ProjectSection
-    class='my-3'
     projects={[
-      
+      {
+        name:'Hearing Test System',
+        description:'Published by 麦文学 scatteredly. Here is a collection for convenience. Authorized.',
+        links:[{type:'github', href:'https://github.com/JerryLiangzh/hearing-test-system'}]
+      }
     ]}
   />
