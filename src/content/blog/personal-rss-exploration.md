@@ -2,7 +2,7 @@
 
 title: '个人向RSS折腾记录'
 publishDate: 2026-01-06
-updatedDate: 2026-01-08
+updatedDate: 2026-04-23
 description: '一些RSS探索经历'
 author: 'Jerry Liangzh'
 tags: ["rss", "freshrss", "clawcloud run"]
@@ -51,6 +51,8 @@ RSS的订阅方式有很多。
 ## 自建RSS订阅
 
 如果希望实现数据的完全掌握，不妨自建订阅源。这方面的服务有[FreshRSS](https://github.com/FreshRSS/FreshRSS)、[minuflux](https://github.com/miniflux/v2)与[Tiny Tiny RSS](https://tt-rss.org)。通过自托管服务，还可以实现跨设备间的自动同步，包括但不限于新内容和已读状态。我最终选了FreshRSS，部署简单——可手动Docker或直接一键部署。由于[ClawCloud Run](https://run.claw.cloud)对满足条件的新用户有每月5美元的优惠，而通过ClawCloud部署FreshRSS每天只需0.11美元，所以我选择在ClawCloud Run部署了一个FreshRSS实例。ClawCloud Run的Appstore中提供[FreshRSS Template](https://template.run.claw.cloud/?openapp=system-fastdeploy%3FtemplateName%3Dfreshrss)，已经设置好相关环境，一键部署即可。
+
+**2026.4.23 Update** ClawCloud Run发布[通知](https://question.run.claw.cloud/questions/10010000000003261)，旗下产品与服务将根据时间表逐步下线。本章相关内容作废。
 
 ![ClawCloud Run First-time Benefit](https://images.kusanali.top/clawcloudrun-first-time-benefit.png)
 ![Cost of FreshRSS in ClawCloud Run](https://images.kusanali.top/freshrss-cost-in-clawcloudrun.png)
