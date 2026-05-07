@@ -109,3 +109,73 @@ const canonicalURL = new URL(Astro.url.pathname.replace(/\.html$/, '').replace(/
 - [URL最后结尾斜杠(/)加与不加区别](https://www.jianshu.com/p/1183ae7b1a33)
 
 - [URL地址末尾/的意义](https://juejin.cn/post/7502349133346930739)
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Settings</th>
+      <th style="text-align: center">A</th>
+      <th style="text-align: center">B</th>
+      <th style="text-align: center">C</th>
+      <th style="text-align: center">D</th>
+      <th style="text-align: center">E</th>
+      <th style="text-align: center">F</th>
+      <th style="text-align: center">G</th>
+      <th style="text-align: center">H</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td>build.format</td>
+      <td colspan="4" style="text-align: center">file</td>
+      <td colspan="4" style="text-align: center">directory</td>
+    </tr>
+    <tr>
+      <td>page file</td>
+      <td colspan="4" style="text-align: center">/blog/about.html</td>
+      <td colspan="4" style="text-align: center">/blog/about/index.html</td>
+    </tr>
+    <tr>
+      <td>Route Matching</td>
+      <td colspan="4" style="text-align: center">/blog/about</td>
+      <td colspan="4" style="text-align: center">/blog/about/</td>
+    </tr>
+    <tr>
+      <td>trailing slash</td>
+      <td colspan="2" style="text-align: center">never</td>
+      <td colspan="2" style="text-align: center">always</td>
+      <td colspan="2" style="text-align: center">never</td>
+      <td colspan="2" style="text-align: center">always</td>
+    </tr>
+    <tr>
+      <td>canonicalURL</td>
+      <td>original code</td>
+      <td>modified code</td>
+      <td>original code</td>
+      <td>modified code</td>
+      <td>original code</td>
+      <td>modified code</td>
+      <td>original code</td>
+      <td>modified code</td>
+    </tr>
+    <tr>
+      <td>address bar</td>
+      <td colspan="4" style="text-align: center">/blog/about</td>
+      <td>ONLY Vercel</td>
+      <td colspan="3" style="text-align: center">/blog/about/</td>
+    </tr>
+    <tr>
+      <td>web source code</td>
+      <td>/blog/about.html</td>
+      <td>/blog/about</td>
+      <td>/blog/about.html</td>
+      <td>/blog/about</td>
+      <td>ONLY Vercel</td>
+      <td>/blog/about</td>
+      <td>/blog/about/</td>
+      <td>/blog/about</td>
+    </tr>
+  </tbody>
+</table>
