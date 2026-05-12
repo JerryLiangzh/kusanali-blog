@@ -90,7 +90,75 @@ const canonicalURL = new URL(Astro.url.pathname.replace(/\.html$/, '').replace(/
 
 **在Vercel部署时**，由于没有Cloudflare的Route Matching，设置如何就是如何。本博客使用的主题，其并未针对build.format作出设置，因此即为默认的directory，结合`trailingSlash: "never"`，故其除主页外的canonicalURL都与浏览器地址栏中一致——所见即所得。**在Cloudflare Pages部署时**，情况就变得稍微有些复杂，变量有点多，经试验，结果如下：
 
-![url settings in cloudflare pages](https://images.kusanali.top/comparison-of-url-settings-in-cloudflare-pages.png)
+<div style="overflow-x: auto;">
+    <table>
+        <thead>
+            <tr>
+                <th>Settings</th>
+                <th style="text-align: center">A</th>
+                <th style="text-align: center">B</th>
+                <th style="text-align: center">C</th>
+                <th style="text-align: center">D</th>
+                <th style="text-align: center">E</th>
+                <th style="text-align: center">F</th>
+                <th style="text-align: center">G</th>
+                <th style="text-align: center">H</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>build.format</td>
+                <td colspan="4" style="text-align: center">file</td>
+                <td colspan="4" style="text-align: center">directory</td>
+            </tr>
+            <tr>
+                <td>page file</td>
+                <td colspan="4" style="text-align: center">/blog/about.html</td>
+                <td colspan="4" style="text-align: center">/blog/about/index.html</td>
+            </tr>
+            <tr>
+                <td>Route Matching</td>
+                <td colspan="4" style="text-align: center">/blog/about</td>
+                <td colspan="4" style="text-align: center">/blog/about/</td>
+            </tr>
+            <tr>
+                <td>trailing slash</td>
+                <td colspan="2" style="text-align: center">never</td>
+                <td colspan="2" style="text-align: center">always</td>
+                <td colspan="2" style="text-align: center">never</td>
+                <td colspan="2" style="text-align: center">always</td>
+            </tr>
+            <tr>
+                <td>canonicalURL</td>
+                <td>original code</td>
+                <td>modified code</td>
+                <td>original code</td>
+                <td>modified code</td>
+                <td>original code</td>
+                <td>modified code</td>
+                <td>original code</td>
+                <td>modified code</td>
+            </tr>
+            <tr>
+                <td>address bar</td>
+                <td colspan="4" style="text-align: center">/blog/about</td>
+                <td>ONLY Vercel</td>
+                <td colspan="3" style="text-align: center">/blog/about/</td>
+            </tr>
+            <tr>
+                <td>web source code</td>
+                <td>/blog/about.html</td>
+                <td>/blog/about</td>
+                <td>/blog/about.html</td>
+                <td>/blog/about</td>
+                <td>ONLY Vercel</td>
+                <td>/blog/about</td>
+                <td>/blog/about/</td>
+                <td>/blog/about</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 这里不含对主页的测试。出于SEO的考虑，`trailingSlash`只取图中这两个值。在Settings E下，修改推送到GitHub后，只有Vercel触发了部署，而Cloudflare Pages则毫无动静。但考虑到这是本博客所用主题的默认代码，故其表现还是可以通过Cloudflare Pages的历史部署链接查看，这种设定下，其地址栏是与拥有相同build.format的设定一致。
 
