@@ -118,7 +118,7 @@ const footerLink1 = footerConf.links?.filter(({ pos }) => pos === 1) || []
     const frame = document.getElementById('musicFrame');
     const dot = document.getElementById('playingDot');
 
-    if (!btn || !frame) return;
+    if (!btn || !frame || !dot) return;
 
     let panelVisible = false;
 
