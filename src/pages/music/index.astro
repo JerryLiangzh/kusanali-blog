@@ -120,14 +120,22 @@
     const audio = new Audio();
     let isPlaying = false;
 
-    const playBtn = document.getElementById('playBtn');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const progressBar = document.getElementById('progressBar');
-    const currentTimeEl = document.getElementById('currentTime');
-    const durationEl = document.getElementById('duration');
-    const trackTitle = document.getElementById('trackTitle');
-    const playlistEl = document.getElementById('playlist');
+    function assertElement<T extends Element>(element: T | null, name: string): T {
+      if (!element) {
+        throw new Error(`Music player element not found: ${name}`);
+      }
+
+      return element;
+    }
+
+    const playBtn = assertElement(document.getElementById('playBtn') as HTMLButtonElement | null, 'playBtn');
+    const prevBtn = assertElement(document.getElementById('prevBtn') as HTMLButtonElement | null, 'prevBtn');
+    const nextBtn = assertElement(document.getElementById('nextBtn') as HTMLButtonElement | null, 'nextBtn');
+    const progressBar = assertElement(document.getElementById('progressBar') as HTMLInputElement | null, 'progressBar');
+    const currentTimeEl = assertElement(document.getElementById('currentTime') as HTMLSpanElement | null, 'currentTime');
+    const durationEl = assertElement(document.getElementById('duration') as HTMLSpanElement | null, 'duration');
+    const trackTitle = assertElement(document.getElementById('trackTitle') as HTMLDivElement | null, 'trackTitle');
+    const playlistEl = assertElement(document.getElementById('playlist') as HTMLDivElement | null, 'playlist');
 
     // 渲染播放列表
     playlist.forEach((song, idx) => {
@@ -141,7 +149,7 @@
       [...playlistEl.children].forEach((el, i) => el.classList.toggle('active', i === currentIndex));
     }
 
-    function loadAndPlay(index) {
+    function loadAndPlay(index: number) {
       currentIndex = index;
       const song = playlist[currentIndex];
       audio.src = song.url;
@@ -167,7 +175,7 @@
       saveState();
     }
 
-    function formatTime(s) {
+    function formatTime(s: number) {
       const m = Math.floor(s / 60);
       const sec = Math.floor(s % 60);
       return `${m.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
@@ -175,14 +183,14 @@
 
     audio.addEventListener('loadedmetadata', () => {
       durationEl.textContent = formatTime(audio.duration);
-      progressBar.max = Math.floor(audio.duration);
+      progressBar.max = String(Math.floor(audio.duration));
     });
     audio.addEventListener('timeupdate', () => {
-      progressBar.value = Math.floor(audio.currentTime);
+      progressBar.value = String(Math.floor(audio.currentTime));
       currentTimeEl.textContent = formatTime(audio.currentTime);
     });
     progressBar.addEventListener('input', () => {
-      audio.currentTime = progressBar.value;
+      audio.currentTime = Number(progressBar.value);
     });
     audio.addEventListener('ended', () => {
       currentIndex = (currentIndex + 1) % playlist.length;
@@ -217,15 +225,19 @@
       const saved = localStorage.getItem('musicPlayerState');
       if (!saved) return;
       try {
-        const { currentIndex: idx, currentTime, isPlaying: wasPlaying } = JSON.parse(saved);
-        if (idx !== undefined && playlist[idx]) {
+        const { currentIndex: idx, currentTime, isPlaying: wasPlaying } = JSON.parse(saved) as {
+          currentIndex?: number;
+          currentTime?: number;
+          isPlaying?: boolean;
+        };
+        if (typeof idx === 'number' && playlist[idx]) {
           currentIndex = idx;
           const song = playlist[currentIndex];
           audio.src = song.url;
           trackTitle.textContent = song.title;
           updateActive();
           audio.addEventListener('loadedmetadata', () => {
-            if (currentTime) audio.currentTime = currentTime;
+            if (typeof currentTime === 'number') audio.currentTime = currentTime;
             if (wasPlaying) {
               audio.play().then(() => {
                 playBtn.textContent = '⏸️';
