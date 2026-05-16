@@ -76,6 +76,7 @@ const footerLink1 = footerConf.links?.filter(({ pos }) => pos === 1) || []
               </a>
             ))
         }
+
         <!-- 音乐播放器切换按钮 -->
         <button id="musicToggleBtn" aria-label="打开音乐播放器" style="background:none;border:none;cursor:pointer;position:relative;">
           <!-- 可以替换成别的 SVG 或继续用 Icon 组件，这里用内联 SVG 举例 -->
@@ -147,25 +148,31 @@ const footerLink1 = footerConf.links?.filter(({ pos }) => pos === 1) || []
         panelVisible = false;
         frame.style.display = 'none';
       }
-    });
-  })();
 
-    const frame = document.getElementById('musicFrame') as HTMLIFrameElement | null;
-    function getCurrentTheme() {
-      const html = document.documentElement;
-      if (html.classList.contains('dark')) return 'dark';
-      if (html.classList.contains('light')) return 'light';
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    function getRawTheme() {
+      // 读取 localStorage 中的原始设置，可能为 'system', 'dark', 'light'
+      return localStorage.getItem('theme') || 'system';
     }
     function sendThemeToPlayer() {
-      if (!frame) return;
-      const theme = getCurrentTheme();
-      frame.contentWindow?.postMessage({ type: 'themeChange', theme }, '*');
+      if (!frame || !frame.contentWindow) return;
+      const theme = getRawTheme();
+      frame.contentWindow.postMessage({ type: 'themeChange', theme }, '*');
     }
-    frame?.addEventListener('load', () => {
+    // 当 iframe 加载完成后立即发送一次当前主题
+    frame.addEventListener('load', sendThemeToPlayer);
+    // 监听主题变化：通过 MutationObserver 观察 <html> 的 class 变化
+    const observer = new MutationObserver(() => {
       sendThemeToPlayer();
     });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    // 额外保险：如果博客主题切换时触发了自定义事件 'theme-changed'
     window.addEventListener('theme-changed', sendThemeToPlayer);
+    // -------- 可选：页面加载时如果 iframe 已存在（缓存加载），再发一次 --------
+    if (frame.contentWindow) {
+      sendThemeToPlayer();
+    }
+    });
+  })();
 </script>
 
 <style>

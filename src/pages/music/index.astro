@@ -323,11 +323,23 @@
     window.addEventListener('message', (event) => {
     if (event.data && event.data.type === 'themeChange') {
         const panel = document.querySelector('.player-panel');
-      if (!panel) return;
-        if (event.data.theme === 'dark') {
-        panel.classList.add('dark');
+        if (!panel) return;
+        const theme = event.data.theme; // 'light' | 'dark' | 'system'
+
+        function applyTheme(isDark: boolean) {
+        panel?.classList.toggle('dark', isDark);
+        }
+
+        if (theme === 'system') {
+        const mql = window.matchMedia('(prefers-color-scheme: dark)');
+        applyTheme(mql.matches);
+        // 跟随系统实时变化
+        mql.addEventListener('change', (e) => {
+            applyTheme(e.matches);
+        });
         } else {
-        panel.classList.remove('dark');
+        // 明确指定 dark 或 light
+        applyTheme(theme === 'dark');
         }
     }
     });
