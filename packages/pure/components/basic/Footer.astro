@@ -115,7 +115,7 @@ const footerLink1 = footerConf.links?.filter(({ pos }) => pos === 1) || []
 <script>
   (function() {
     const btn = document.getElementById('musicToggleBtn');
-    const frame = document.getElementById('musicFrame');
+    const frame = document.getElementById('musicFrame') as HTMLIFrameElement | null;
     const dot = document.getElementById('playingDot');
 
     if (!btn || !frame || !dot) return;
@@ -149,6 +149,23 @@ const footerLink1 = footerConf.links?.filter(({ pos }) => pos === 1) || []
       }
     });
   })();
+
+    const frame = document.getElementById('musicFrame') as HTMLIFrameElement | null;
+    function getCurrentTheme() {
+      const html = document.documentElement;
+      if (html.classList.contains('dark')) return 'dark';
+      if (html.classList.contains('light')) return 'light';
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    function sendThemeToPlayer() {
+      if (!frame) return;
+      const theme = getCurrentTheme();
+      frame.contentWindow?.postMessage({ type: 'themeChange', theme }, '*');
+    }
+    frame?.addEventListener('load', () => {
+      sendThemeToPlayer();
+    });
+    window.addEventListener('theme-changed', sendThemeToPlayer);
 </script>
 
 <style>

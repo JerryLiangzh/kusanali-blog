@@ -5,87 +5,148 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Music Player</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      background: transparent;
-      overflow: hidden;
-      font-family: system-ui, -apple-system, sans-serif;
-    }
-    .player-panel {
-      width: 100vw;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(12px);
-      color: #fff;
-      padding: 20px;
-      border-radius: 12px;
-    }
-    .track-title {
-      font-size: 0.9rem;
-      margin-bottom: 12px;
-      opacity: 0.85;
-    }
-    .controls {
-      display: flex;
-      gap: 16px;
-      margin: 12px 0;
-    }
-    .controls button {
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.3);
-      color: white;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      font-size: 18px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: 0.2s;
-    }
-    .controls button:hover {
-      background: rgba(255,255,255,0.25);
-    }
-    .progress {
-      width: 100%;
-      margin: 8px 0;
-      accent-color: #60a5fa;
-    }
-    .time {
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
-      font-size: 0.7rem;
-      opacity: 0.6;
-    }
-    .playlist {
-      width: 100%;
-      margin-top: 12px;
-      max-height: 140px;
-      overflow-y: auto;
-    }
-    .playlist div {
-      padding: 6px 10px;
-      cursor: pointer;
-      border-radius: 4px;
-      opacity: 0.7;
-      font-size: 0.8rem;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .playlist div.active {
-      background: rgba(255,255,255,0.2);
-      opacity: 1;
-    }
-    .playlist div:hover {
-      background: rgba(255,255,255,0.1);
-    }
+  :root {
+    --player-bg: rgba(255, 255, 255, 0.88);
+    --player-text: #1e293b;
+    --player-text-secondary: #64748b;
+    --player-accent: #7db83d;
+    --player-accent-hover: #6a9e34;
+    --player-border: rgba(0,0,0,0.08);
+    --player-progress-bg: #e2e8f0;
+    --player-btn-bg: rgba(0,0,0,0.04);
+    --player-btn-hover-bg: rgba(0,0,0,0.08);
+    --player-btn-border: rgba(0,0,0,0.12);
+    --player-scrollbar: #cbd5e1;
+  }
+  .player-panel.dark {
+    --player-bg: rgba(15, 23, 42, 0.88);
+    --player-text: #f1f5f9;
+    --player-text-secondary: #94a3b8;
+    --player-border: rgba(255,255,255,0.1);
+    --player-progress-bg: #334155;
+    --player-btn-bg: rgba(255,255,255,0.06);
+    --player-btn-hover-bg: rgba(255,255,255,0.12);
+    --player-btn-border: rgba(255,255,255,0.15);
+    --player-scrollbar: #475569;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: transparent;
+    overflow: hidden;
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+  .player-panel {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--player-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    color: var(--player-text);
+    padding: 24px;
+    border-radius: 14px;
+    transition: background 0.3s, color 0.3s;
+  }
+  .track-title {
+    font-size: 0.95rem;
+    margin-bottom: 16px;
+    opacity: 0.85;
+    font-weight: 500;
+    text-align: center;
+    word-break: break-word;
+  }
+  .controls {
+    display: flex;
+    gap: 18px;
+    margin: 16px 0;
+  }
+  .controls button {
+    background: var(--player-btn-bg);
+    border: 1px solid var(--player-btn-border);
+    color: var(--player-text);
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+  .controls button:hover {
+    background: var(--player-btn-hover-bg);
+    border-color: var(--player-accent);
+    color: var(--player-accent);
+  }
+  .progress {
+    width: 100%;
+    margin: 12px 0;
+    accent-color: var(--player-accent);
+    height: 4px;
+    border-radius: 2px;
+    background: var(--player-progress-bg);
+    cursor: pointer;
+  }
+  .progress::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--player-accent);
+    cursor: pointer;
+    box-shadow: 0 0 0 2px var(--player-bg);
+  }
+  .time {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 0.75rem;
+    opacity: 0.65;
+    color: var(--player-text-secondary);
+  }
+  .playlist {
+    width: 100%;
+    margin-top: 14px;
+    max-height: 120px;
+    overflow-y: auto;
+    border: 1px solid var(--player-border);
+    border-radius: 8px;
+    padding: 4px;
+  }
+  .playlist div {
+    padding: 6px 10px;
+    cursor: pointer;
+    border-radius: 6px;
+    opacity: 0.75;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: 0.15s;
+  }
+  .playlist div.active {
+    background: var(--player-accent);
+    color: white;
+    opacity: 1;
+    font-weight: 500;
+  }
+  .playlist div:hover:not(.active) {
+    background: var(--player-btn-hover-bg);
+  }
+  .playlist::-webkit-scrollbar {
+    width: 4px;
+  }
+  .playlist::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .playlist::-webkit-scrollbar-thumb {
+    background: var(--player-scrollbar);
+    border-radius: 4px;
+  }
   </style>
 </head>
 <body>
@@ -93,7 +154,7 @@
     <div class="track-title" id="trackTitle">未选择曲目</div>
     <div class="controls">
       <button id="prevBtn">⏮</button>
-      <button id="playBtn">▶️</button>
+      <button id="playBtn">▶</button>
       <button id="nextBtn">⏭</button>
     </div>
     <input type="range" class="progress" id="progressBar" value="0" min="0" max="100" />
@@ -153,7 +214,7 @@
       trackTitle.textContent = song.title;
       audio.play().then(() => {
         isPlaying = true;
-        playBtn.textContent = '⏸️';
+        playBtn.textContent = '⏸';
         saveState();
       }).catch(console.warn);
       updateActive();
@@ -163,10 +224,10 @@
       if (!audio.src) { loadAndPlay(0); return; }
       if (isPlaying) {
         audio.pause();
-        playBtn.textContent = '▶️';
+        playBtn.textContent = '▶';
       } else {
         audio.play();
-        playBtn.textContent = '⏸️';
+        playBtn.textContent = '⏸';
       }
       isPlaying = !isPlaying;
       saveState();
@@ -237,7 +298,7 @@
             if (typeof currentTime === 'number') audio.currentTime = currentTime;
             if (wasPlaying) {
               audio.play().then(() => {
-                playBtn.textContent = '⏸️';
+                playBtn.textContent = '⏸';
                 isPlaying = true;
               }).catch(console.warn);
             }
@@ -257,6 +318,19 @@
     audio.addEventListener('play', notifyState);
     audio.addEventListener('pause', notifyState);
     audio.addEventListener('ended', notifyState);
+
+    // 接收父页面发来的主题信息
+    window.addEventListener('message', (event) => {
+    if (event.data && event.data.type === 'themeChange') {
+        const panel = document.querySelector('.player-panel');
+      if (!panel) return;
+        if (event.data.theme === 'dark') {
+        panel.classList.add('dark');
+        } else {
+        panel.classList.remove('dark');
+        }
+    }
+    });
   </script>
 </body>
 </html>
