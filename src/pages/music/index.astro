@@ -1,0 +1,253 @@
+---
+// src/pages/player.astro
+---
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Music Player</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: transparent;
+      overflow: hidden;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    .player-panel {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(12px);
+      color: #fff;
+      padding: 20px;
+      border-radius: 12px;
+    }
+    .track-title {
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+      opacity: 0.85;
+    }
+    .controls {
+      display: flex;
+      gap: 16px;
+      margin: 12px 0;
+    }
+    .controls button {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.2s;
+    }
+    .controls button:hover {
+      background: rgba(255,255,255,0.25);
+    }
+    .progress {
+      width: 100%;
+      margin: 8px 0;
+      accent-color: #60a5fa;
+    }
+    .time {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      font-size: 0.7rem;
+      opacity: 0.6;
+    }
+    .playlist {
+      width: 100%;
+      margin-top: 12px;
+      max-height: 140px;
+      overflow-y: auto;
+    }
+    .playlist div {
+      padding: 6px 10px;
+      cursor: pointer;
+      border-radius: 4px;
+      opacity: 0.7;
+      font-size: 0.8rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .playlist div.active {
+      background: rgba(255,255,255,0.2);
+      opacity: 1;
+    }
+    .playlist div:hover {
+      background: rgba(255,255,255,0.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="player-panel">
+    <div class="track-title" id="trackTitle">未选择曲目</div>
+    <div class="controls">
+      <button id="prevBtn">⏮</button>
+      <button id="playBtn">▶️</button>
+      <button id="nextBtn">⏭</button>
+    </div>
+    <input type="range" class="progress" id="progressBar" value="0" min="0" max="100" />
+    <div class="time">
+      <span id="currentTime">00:00</span>
+      <span id="duration">00:00</span>
+    </div>
+    <div class="playlist" id="playlist"></div>
+  </div>
+
+  <script>
+    // 替换成你 R2 上的真实 mp3 链接
+    const playlist = [
+      { title: "The Road Not Taken", url: "https://images.kusanali.top/hoyomix-and-aimer-the-road-not-taken.mp3" },
+      { title: "La Vaguelette", url: "https://images.kusanali.top/hoyomix-la-vaguelette.mp3" },
+      { title: "Surasthana Fantasia", url: "https://images.kusanali.top/hoyomix-surasthana-fantasia.mp3" },
+      { title: "Passing Memories", url: "https://images.kusanali.top/zhangjie-and-hoyomix-passing-memories.mp3" }
+    ];
+
+    let currentIndex = 0;
+    const audio = new Audio();
+    let isPlaying = false;
+
+    const playBtn = document.getElementById('playBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const progressBar = document.getElementById('progressBar');
+    const currentTimeEl = document.getElementById('currentTime');
+    const durationEl = document.getElementById('duration');
+    const trackTitle = document.getElementById('trackTitle');
+    const playlistEl = document.getElementById('playlist');
+
+    // 渲染播放列表
+    playlist.forEach((song, idx) => {
+      const div = document.createElement('div');
+      div.textContent = song.title;
+      div.addEventListener('click', () => loadAndPlay(idx));
+      playlistEl.appendChild(div);
+    });
+
+    function updateActive() {
+      [...playlistEl.children].forEach((el, i) => el.classList.toggle('active', i === currentIndex));
+    }
+
+    function loadAndPlay(index) {
+      currentIndex = index;
+      const song = playlist[currentIndex];
+      audio.src = song.url;
+      trackTitle.textContent = song.title;
+      audio.play().then(() => {
+        isPlaying = true;
+        playBtn.textContent = '⏸️';
+        saveState();
+      }).catch(console.warn);
+      updateActive();
+    }
+
+    function togglePlay() {
+      if (!audio.src) { loadAndPlay(0); return; }
+      if (isPlaying) {
+        audio.pause();
+        playBtn.textContent = '▶️';
+      } else {
+        audio.play();
+        playBtn.textContent = '⏸️';
+      }
+      isPlaying = !isPlaying;
+      saveState();
+    }
+
+    function formatTime(s) {
+      const m = Math.floor(s / 60);
+      const sec = Math.floor(s % 60);
+      return `${m.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
+    }
+
+    audio.addEventListener('loadedmetadata', () => {
+      durationEl.textContent = formatTime(audio.duration);
+      progressBar.max = Math.floor(audio.duration);
+    });
+    audio.addEventListener('timeupdate', () => {
+      progressBar.value = Math.floor(audio.currentTime);
+      currentTimeEl.textContent = formatTime(audio.currentTime);
+    });
+    progressBar.addEventListener('input', () => {
+      audio.currentTime = progressBar.value;
+    });
+    audio.addEventListener('ended', () => {
+      currentIndex = (currentIndex + 1) % playlist.length;
+      loadAndPlay(currentIndex);
+    });
+    prevBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
+      loadAndPlay(currentIndex);
+    });
+    nextBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % playlist.length;
+      loadAndPlay(currentIndex);
+    });
+    playBtn.addEventListener('click', togglePlay);
+
+    // 状态保存与恢复（解决页面跳转中断）
+    function saveState() {
+      const state = {
+        currentIndex,
+        currentTime: audio.currentTime,
+        isPlaying: !audio.paused,
+      };
+      localStorage.setItem('musicPlayerState', JSON.stringify(state));
+    }
+    window.addEventListener('beforeunload', saveState);
+    audio.addEventListener('pause', saveState);
+    audio.addEventListener('ended', saveState);
+    setInterval(saveState, 5000);
+
+    // 恢复
+    (function restore() {
+      const saved = localStorage.getItem('musicPlayerState');
+      if (!saved) return;
+      try {
+        const { currentIndex: idx, currentTime, isPlaying: wasPlaying } = JSON.parse(saved);
+        if (idx !== undefined && playlist[idx]) {
+          currentIndex = idx;
+          const song = playlist[currentIndex];
+          audio.src = song.url;
+          trackTitle.textContent = song.title;
+          updateActive();
+          audio.addEventListener('loadedmetadata', () => {
+            if (currentTime) audio.currentTime = currentTime;
+            if (wasPlaying) {
+              audio.play().then(() => {
+                playBtn.textContent = '⏸️';
+                isPlaying = true;
+              }).catch(console.warn);
+            }
+          }, { once: true });
+        }
+      } catch (e) {}
+    })();
+
+    // 向父页面报告播放状态（用于控制小绿点）
+    function notifyState() {
+      window.parent.postMessage({
+        type: 'playerState',
+        isPlaying: !audio.paused,
+        title: playlist[currentIndex]?.title,
+      }, '*');
+    }
+    audio.addEventListener('play', notifyState);
+    audio.addEventListener('pause', notifyState);
+    audio.addEventListener('ended', notifyState);
+  </script>
+</body>
+</html>

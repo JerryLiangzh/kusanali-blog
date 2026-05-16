@@ -76,10 +76,77 @@ const footerLink1 = footerConf.links?.filter(({ pos }) => pos === 1) || []
               </a>
             ))
         }
+        <!-- 音乐播放器切换按钮 -->
+        <button id="musicToggleBtn" aria-label="打开音乐播放器" style="background:none;border:none;cursor:pointer;position:relative;">
+          <!-- 可以替换成别的 SVG 或继续用 Icon 组件，这里用内联 SVG 举例 -->
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 18V5l12-2v13"/>
+            <circle cx="6" cy="18" r="3"/>
+            <circle cx="18" cy="16" r="3"/>
+          </svg>
+          <!-- 小绿点指示器 -->
+          <span id="playingDot" style="display:none;position:absolute;top:-2px;right:-2px;width:8px;height:8px;background:#4ade80;border-radius:50%;border:1px solid white;"></span>
+        </button>
       </div>
     </div>
   </div>
 </footer>
+
+<!-- 音乐播放器 iframe -->
+<iframe
+  id="musicFrame"
+  src="/player"
+  style="
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 320px;
+    height: 420px;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+    z-index: 9999;
+    display: none;
+    background: transparent;
+  "
+  allow="autoplay"
+></iframe>
+
+<script>
+  (function() {
+    const btn = document.getElementById('musicToggleBtn');
+    const frame = document.getElementById('musicFrame');
+    const dot = document.getElementById('playingDot');
+
+    if (!btn || !frame) return;
+
+    let panelVisible = false;
+
+    btn.addEventListener('click', () => {
+      panelVisible = !panelVisible;
+      frame.style.display = panelVisible ? 'block' : 'none';
+    });
+
+    // 监听 iframe 发来的播放状态，控制小绿点
+    window.addEventListener('message', (event) => {
+      if (event.data && event.data.type === 'playerState') {
+        if (event.data.isPlaying) {
+          dot.style.display = 'block';
+        } else {
+          dot.style.display = 'none';
+        }
+      }
+    });
+
+    // 点击页面其他地方关闭面板（可选）
+    document.addEventListener('click', (e) => {
+      if (panelVisible && !frame.contains(e.target) && e.target !== btn) {
+        panelVisible = false;
+        frame.style.display = 'none';
+      }
+    });
+  })();
+</script>
 
 <style>
   footer a {
