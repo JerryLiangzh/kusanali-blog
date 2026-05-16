@@ -79,7 +79,7 @@ const footerLink1 = footerConf.links?.filter(({ pos }) => pos === 1) || []
         <!-- 音乐播放器切换按钮 -->
         <button id="musicToggleBtn" aria-label="打开音乐播放器" style="background:none;border:none;cursor:pointer;position:relative;">
           <!-- 可以替换成别的 SVG 或继续用 Icon 组件，这里用内联 SVG 举例 -->
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg class="music-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M9 18V5l12-2v13"/>
             <circle cx="6" cy="18" r="3"/>
             <circle cx="18" cy="16" r="3"/>
@@ -156,5 +156,11 @@ const footerLink1 = footerConf.links?.filter(({ pos }) => pos === 1) || []
     color: hsl(var(--foreground) / var(--un-text-opacity, 1));
     text-decoration: underline;
     font-weight: 500;
+  }
+  .music-icon {
+  transition: stroke 0.2s ease;
+  }
+  button:hover .music-icon {
+    stroke: #7db83d;
   }
 </style>
