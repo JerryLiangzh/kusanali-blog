@@ -1,0 +1,76 @@
+---
+import { Collapse, Spoiler, Timeline } from 'astro-pure/user'
+import PageLayout from '@/layouts/CommonPage.astro'
+
+const headings = [
+  { depth: 2, slug: 'hobbies', text: 'Hobbies' },
+  { depth: 2, slug: 'social-networks', text: 'Social Networks' },
+  { depth: 2, slug: 'blog-infrastructure', text: 'Blog Infrastructure' }
+]
+---
+
+<PageLayout title='About' {headings} comment>
+  <p>Chemistry student / Entry-level researcher</p>
+  <p>
+    你好，我是Jerry Liangzh。
+  </p>
+  <p>
+  <Spoiler>知识，与你分享</Spoiler>
+  </p>
+
+  {/* general-talk */}
+  <h2 id='hobbies'>Hobbies</h2>
+  <ul>
+    <li>Music: wide preferences</li>
+    <li>Games: wide preferences, such as mihoyo games series, Minecraft, Counter-Strike 2 and Slay the Spire</li>
+    <li>Reading: Currently reading <i>Educated</i></li>
+    <li>Sports: badminton and running; watching Formula 1 Grand Prixs and Counter-Strike 2 matches</li>
+    <li>Research interests: the preparation, synthesis, and performance study of metal-based electrocatalysts</li>
+  </ul>
+
+  {/* about-blog */}
+  <h2 id='blog-infrastructure'>Blog Infrastructure</h2>
+  <Collapse title='Website history:'>
+  <Timeline
+    events={[
+      {
+        date: '2025-11-12',
+        content:
+          'Version update of theme turns from Template to Fork'
+      },
+      {
+        date: '2025-09-02',
+        content:
+          'Construction finished'
+      },
+      {
+        date: '2025-08-31',
+        content: 
+          'Start building this blog</a>'
+      }
+    ]}
+  />
+  </Collapse>
+
+  <ul>
+    <li>域名: <a href='https://www.aliyun.com/' target='_blank'>Ali Cloud</a></li>
+    
+    <li>
+      框架 & 主题: <a href='https://astro.build/' target='_blank'>Astro</a> + <a
+        href='https://github.com/cworld1/astro-theme-pure'
+        target='_blank'>Astro Theme Pure</a>
+    </li>
+
+    <li>网站托管：<a href='https://www.cloudflare.com' target='_blank'>Cloudflare</a></li>
+
+    <li>评论系统：<a href='https://waline.js.org' target='_blank'>Waline</a> + <a 
+      href='https://vercel.com' target='_blank'>Vercel</a> + <a 
+      href='https://cloud.mongodb.com' target='_blank'>MongoDB Cloud</a>
+    </li>
+
+    <li>统计：<a href='https://waline.js.org/' target='_blank'>Waline</a> + <a
+        href='https://umami.is/' target='_blank'>Umami</a>
+    </li>
+
+  </ul>
+</PageLayout>

@@ -1,0 +1,37 @@
+---
+import config from 'virtual:config'
+
+const { content, class: className, ...props } = Astro.props
+---
+
+<div id='qrcode-container' class={className} {...props}></div>
+
+<script is:inline src={`${config.npmCDN}/qrcodejs/qrcode.min.js`}></script>
+<script is:inline define:vars={{ content }}>
+  const renderContent = content ?? window.location.href
+  // Load qrcode
+  function loadQRcode(qrcodeContainer) {
+    if (!qrcodeContainer) throw new Error('qrcode container not found')
+    if (qrcodeContainer.innerHTML !== '') return
+    
+    if (typeof QRCode !== 'undefined') {
+      new QRCode(qrcodeContainer, renderContent);
+    }
+    document.addEventListener("astro:page-load", loadQRcode);
+
+    // new QRCode(qrcodeContainer, renderContent)
+
+    // 为 QR Code设置 alt 属性，为保险稍作延迟确保DOM已经更新
+    setTimeout(() => {
+      const qrImage = qrcodeContainer.querySelector('img')
+      if (qrImage) {
+        qrImage.alt = '本页面的二维码'
+        qrImage.setAttribute('role', 'img')
+        qrImage.setAttribute('aria-label', '本页面的二维码')
+      }
+    }, 259)
+  }
+  const qrcodeContainer = document.getElementById('qrcode-container')
+  if (!qrcodeContainer) throw new Error('qrcode container not found')
+  loadQRcode(qrcodeContainer)
+</script>

@@ -1,0 +1,50 @@
+---
+
+import PageLayout from '@/layouts/CommonPage.astro'
+import ProjectSection from '@/components/projects/ProjectSection.astro'
+//import AcademicSection from '@/components/projects/AcademicSection.astro'
+
+const headings = [
+  { depth: 2, slug: 'projects', text: 'Projects' },
+  { depth: 2, slug: 'mods', text: 'Mods' },
+  { depth: 2, slug: 'others', text: 'Others' },
+]
+---
+<PageLayout title='Projects' {headings} view>
+  <h2 id='projects'>Projects</h2>
+  <ProjectSection
+    projects={[
+      {
+        name:'GKD Subscription',
+        description:'A subscription source for GKD. UNDER DEVELOPMENT.',
+        links:[{type:'github', href:'https://github.com/JerryLiangzh/gkd-subscription'}]
+      }
+    ]}
+  />
+
+  <h2 id='mods'>Mods</h2>
+  <ProjectSection
+    projects={[
+      {
+        name:'StrinovaSpire',
+        description:'A Strinova-themed Mod of Slay the Spire. UNDER DEVELOPMENT.',
+        links:[{type:'github', href:'https://github.com/JerryLiangzh/StrinovaSpire'}]
+      }
+    ]}
+  />
+
+  <h2 id='others'>Others</h2>
+  <ProjectSection
+    projects={[
+      {
+        name:'Hearing Test System',
+        description:'Published by 麦文学 scatteredly. Here is a collection for convenience. Authorized.',
+        links:[{type:'github', href:'https://github.com/JerryLiangzh/hearing-test-system'}]
+      },
+      {
+        name:'Mahjong Soul Resources',
+        description:'A collection of resources related to Mahjong Soul. For personal study only.',
+        links:[{type:'github', href:'https://github.com/JerryLiangzh/mahjong-soul-resources'}]
+      }
+    ]}
+  />
