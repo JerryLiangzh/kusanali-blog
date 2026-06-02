@@ -32,10 +32,14 @@ export default defineConfig({
   trailingSlash: 'never',
   // root: './my-project-directory',
   server: { 
-    host: true, 
+    host: true,
     allowedHosts: ['kusanali.top'] 
   },
-  
+  // https://docs.astro.build/en/guides/prefetch/
+  prefetch: {
+    prefetchAll: false,
+    defaultStrategy: 'hover'
+  },
   // Refer to https://docs.astro.build/en/reference/configuration-reference/#buildformat
   build: {
     format: 'file'
@@ -43,7 +47,7 @@ export default defineConfig({
 
   // [Adapter]
   // https://docs.astro.build/en/guides/deploy/
-  // adapter: vercel(),
+  // adapter: vercel({ imageService: true }),
   output: 'static',
   // Local (standalone)
   // adapter: node({ mode: 'standalone' }),
@@ -52,11 +56,27 @@ export default defineConfig({
   // [Assets]
   image: {
     responsiveStyles: true,
-    domains:['https://images.kusanali.top'],
-    service: {
-      entrypoint: 'astro/assets/services/sharp'
-    }
+    service: { entrypoint: 'astro/assets/services/sharp' },
+    domains: ['images.kusanali.top'],
+    remotePatterns: [{ protocol: 'https' }]
   },
+  // Enable font preloading and optimization
+  // https://docs.astro.build/en/guides/fonts/
+  fonts: [
+    {
+      provider: fontProviders.fontshare(),
+      name: 'Satoshi',
+      cssVariable: '--font-satoshi',
+      // Default included:
+      // weights: [400],
+      // styles: ["normal", "italics"],
+      // subsets: ["cyrillic-ext", "cyrillic", "greek-ext", "greek", "vietnamese", "latin-ext", "latin"],
+      // fallbacks: ["sans-serif"],
+      styles: ['normal', 'italic'],
+      weights: [400, 500],
+      subsets: ['latin']
+    }
+  ],
 
   // [Markdown]
   markdown: {
@@ -110,8 +130,6 @@ export default defineConfig({
     // sitemap(),
     // mdx(),
     AstroPureIntegration(config)
-    // Compress recommend
-    // https://docs.astro.build/en/guides/integrations-guide/partytown/
   ],
 
   // [Experimental]
@@ -122,22 +140,15 @@ export default defineConfig({
     // Enable SVGO optimization for SVG assets
     // https://docs.astro.build/en/reference/experimental-flags/svg-optimization/
     svgo: true,
-    // Enable font preloading and optimization
-    // https://docs.astro.build/en/reference/experimental-flags/fonts/
-    fonts: [
-      {
-        provider: fontProviders.fontshare(),
-        name: 'Satoshi',
-        cssVariable: '--font-satoshi',
-        // Default included:
-        // weights: [400],
-        // styles: ["normal", "italics"],
-        // subsets: ["cyrillic-ext", "cyrillic", "greek-ext", "greek", "vietnamese", "latin-ext", "latin"],
-        // fallbacks: ["sans-serif"],
-        styles: ['normal', 'italic'],
-        weights: [400, 500],
-        subsets: ['latin']
-      }
-    ]
+    // Enables pre-rendering your prefetched pages on the client in supported browsers.
+    // https://docs.astro.build/en/reference/experimental-flags/client-prerender/
+    clientPrerender: true,
+    // Enables using the new Rust-based compiler for Astro files.
+    // https://docs.astro.build/en/reference/experimental-flags/rust-compiler/
+    rustCompiler: false,
+    // https://docs.astro.build/en/reference/experimental-flags/queued-rendering/
+    queuedRendering: {
+      enabled: true
+    }
   }
 })

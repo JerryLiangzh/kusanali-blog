@@ -13,11 +13,7 @@ const { selector = config.integ.mediumZoom.selector, background = 'hsl(var(--bac
 
 <script is:inline src={`${config.npmCDN}/medium-zoom/dist/pure/medium-zoom.min.umd.js`}></script>
 <script is:inline define:vars={{ selector, background }}>
-  document.addEventListener("astro:page-load", () => {
-    if (typeof mediumZoom !== 'undefined') {
-      mediumZoom(selector, { background });
-    }
-  });
+  mediumZoom(selector, { background })
   
 </script>
 <style is:global>
