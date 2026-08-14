@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Music Player iFrame</title>
+</head>
+<body>
+  <audio id="audio" preload="auto"></audio>
+  <script>
+    ;(function () {
+      const audio = document.getElementById('audio')
+      const STORAGE_KEY = 'music-player-state'
+
+      // ─── 向父页面发消息（仅用于状态上报，不用于触发动作） ───
+      function send(type, data) {
+        try { window.parent.postMessage({ type, source: 'music-frame', ...(data || {}) }, '*') } catch (_) {}
+      }
+
+      function saveState() {
+        try {
+          const cur = JSON.parse(sessionStorage.getItem(STORAGE_KEY) || '{}')
+          sessionStorage.setItem(STORAGE_KEY, JSON.stringify({
+            ...cur,
+            src: audio.src || '',
+            currentTime: audio.currentTime || 0,
+            isPlaying: !audio.paused,
+            duration: audio.duration || 0
+          }))
+        } catch (_) {}
+      }
+
+      function patchState(patch) {
+        try {
+          const cur = JSON.parse(sessionStorage.getItem(STORAGE_KEY) || '{}')
+          sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ ...cur, ...patch }))
+        } catch (_) {}
+      }
+
+      //  暴露给父页面直接调用的接口（同源同步调用，保留用户手势）
+      window.MusicFrame = {
+        init: function () {
+          try {
+            const raw = sessionStorage.getItem(STORAGE_KEY)
+            if (raw) {
+              const s = JSON.parse(raw)
+              if (s.src) {
+                audio.src = s.src
+                if (s.currentTime) audio.currentTime = s.currentTime
+                if (typeof s.volume === 'number') audio.volume = s.volume
+              }
+              send('ready', { restored: !!s.src })
+            } else {
+              send('ready', { restored: false })
+            }
+          } catch (_) {
+            send('ready', { restored: false })
+          }
+        },
+
+        play: function (src, currentTime) {
+          if (src && src !== audio.src) {
+            audio.src = src
+          }
+          if (typeof currentTime === 'number' && currentTime >= 0) {
+            if (audio.readyState >= 1) {
+              audio.currentTime = currentTime
+            } else {
+              audio.addEventListener('loadedmetadata', function onMeta() {
+                audio.removeEventListener('loadedmetadata', onMeta)
+                if (currentTime > 0) audio.currentTime = currentTime
+              })
+            }
+          }
+          // 同步调用 play()，保留用户手势，绕过自动播放策略
+          return audio.play().then(function () {
+            send('playing')
+          }).catch(function (err) {
+            console.warn('[MusicFrame] play failed:', err)
+            send('play-error', { message: err.message })
+          })
+        },
+
+        pause: function () {
+          audio.pause()
+        },
+
+        seek: function (t) {
+          if (typeof t === 'number') audio.currentTime = t
+        },
+
+        setVolume: function (v) {
+          audio.volume = Math.max(0, Math.min(1, v))
+          patchState({ volume: audio.volume })
+        },
+
+        load: function (src) {
+          if (src) {
+            audio.src = src
+            audio.load()
+          }
+        },
+
+        getState: function () {
+          send('state', {
+            src: audio.src || '',
+            currentTime: audio.currentTime || 0,
+            duration: audio.duration || 0,
+            isPlaying: !audio.paused,
+            volume: audio.volume
+          })
+        }
+      }
+
+      // ─── 音频事件上报（异步 postMessage 是安全的） ───
+      audio.addEventListener('loadedmetadata', function () {
+        send('loaded', { duration: audio.duration })
+      })
+      audio.addEventListener('timeupdate', function () {
+        send('timeupdate', { currentTime: audio.currentTime, duration: audio.duration || 0 })
+      })
+      audio.addEventListener('play', function () { send('playing') })
+      audio.addEventListener('pause', function () { send('paused') })
+      audio.addEventListener('ended', function () { send('ended') })
+      audio.addEventListener('error', function () { send('error') })
+
+      // ─── 定期保存状态 ───
+      setInterval(saveState, 3000)
+      window.addEventListener('pagehide', saveState)
+      window.addEventListener('beforeunload', saveState)
+    })()
+  </script>
+</body>
+</html>

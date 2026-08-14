@@ -50,7 +50,7 @@ RSS的订阅方式有很多。
 
 ## 自建RSS订阅
 
-如果希望实现数据的完全掌握，不妨自建订阅源。这方面的服务有[FreshRSS](https://github.com/FreshRSS/FreshRSS)、[minuflux](https://github.com/miniflux/v2)与[Tiny Tiny RSS](https://tt-rss.org)。通过自托管服务，还可以实现跨设备间的自动同步，包括但不限于新内容和已读状态。我最终选了FreshRSS，部署简单——可手动Docker或直接一键部署。
+如果希望实现数据的完全掌握，不妨自建订阅源。这方面的服务有[FreshRSS](https://github.com/FreshRSS/FreshRSS)、[miniflux](https://github.com/miniflux/v2)与[Tiny Tiny RSS](https://tt-rss.org)。通过自托管服务，还可以实现跨设备间的自动同步，包括但不限于新内容和已读状态。我最终选了FreshRSS，部署简单——可手动Docker或直接一键部署。
 
 ~~由于[ClawCloud Run](https://run.claw.cloud)对满足条件的新用户有每月5美元的优惠，而通过ClawCloud部署FreshRSS每天只需0.11美元，所以我选择在ClawCloud Run部署了一个FreshRSS实例。ClawCloud Run的Appstore中提供[FreshRSS Template](https://template.run.claw.cloud/?openapp=system-fastdeploy%3FtemplateName%3Dfreshrss)，已经设置好相关环境，一键部署即可。~~
 

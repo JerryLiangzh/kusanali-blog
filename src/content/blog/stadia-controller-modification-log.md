@@ -23,7 +23,7 @@ featured: false
 
 ### 游戏兼容性测试
 
-为了测试该手柄在非 Steam 游戏及独立启动器环境下的原生兼容性，我选择了几款游戏进行交叉测试，摘要如下：
+为了测试该手柄在非Steam游戏及独立启动器环境下的原生兼容性，我选择了几款游戏进行交叉测试，摘要如下：
 
 | 测试对象 | 识别结果 | 异常表现 |
 |------|------|----------|
@@ -36,6 +36,8 @@ featured: false
 ![Genshin Playstation Controller Settings](https://images.kusanali.top/genshin-playstation-controller-settings.png)
 
 在《崩坏：星穹铁道》中，一切正常，所有按键都能执行指定任务。而且，在Stadia Controller与电脑已经连接的前提下，无需像《原神》一样在设置页面在“键盘鼠标”与“手柄”间手动切换输入设备，只要检测到Stadia Controller输入信号，手柄支持就会自动启用（即无缝切换），同时游戏的按键提示UI会自动切换为手柄相关。《绝区零》并未测试，但作为妹妹的她，技术支持应该会比两个姐姐更好，手柄支持更不在话下。在《卡拉彼丘》中，无论控制器设置采用何种方案/搭配，Stadia Controller均无反应，就像报废了一样。
+
+**更新**：是我疏忽了。在我测试时，《原神》已经开启了无缝化功能，但手柄开箱即用状态下的异常识别吸引了我的注意力，使我遗漏了它。这个功能表现为一个开关。关闭时，就向上文所提，需要在设置节面手动切换；开启后，无需手动切换，表现就和她妹妹一样。这个功能好像是最近几个版本才加入的。
 
 ![Strinova Controller Settings](https://images.kusanali.top/strinova-controller-settings.png)
 
@@ -61,7 +63,7 @@ featured: false
 
 2. 映射桥梁：[Stadia ViGEm](https://github.com/walkco/stadia-vigem)
 
-    Stadia ViGEm针对Stadia Controller开发，其作用是捕获手柄的原生信号，并通过调用ViGEmBus，将其转化为符合标准XInput协议的Xbox 360 控制器信号。
+    Stadia ViGEm针对Stadia Controller开发，其作用是捕获手柄的原生信号，并通过调用ViGEmBus，将其转化为符合标准XInput协议的Xbox 360 Controller信号。
 
 3. 设备隔离：[HidHide](https://github.com/nefarius/HidHide)
 
@@ -93,4 +95,4 @@ featured: false
 
 ![Genshin Controller Double Input another example](https://images.kusanali.top/genshin-controller-double-input-2.png)
 
-总之，通过构建这一套完整的虚拟映射链路，Stadia Controller得以在 Windows 11环境下获取近乎完美的全局游戏兼容性，这也是目前挖掘该手柄剩余硬件价值的最优解之一。
+总之，通过构建这一套完整的虚拟映射链路，Stadia Controller得以在Windows 11环境下获取近乎完美的全局游戏兼容性，这也是目前挖掘该手柄剩余硬件价值的最优解之一。

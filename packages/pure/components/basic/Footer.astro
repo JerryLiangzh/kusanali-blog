@@ -77,6 +77,31 @@ const footerLink1 = footerConf.links?.filter(({ pos }) => pos === 1) || []
             </a>
           ))
         }
+
+        <button
+        id="music-trigger"
+        class="music-trigger-btn"
+        aria-label="Open music player"
+        title="Music Player"
+        onclick="window.__musicPlayer?.openPanel()"
+      >
+        <svg
+          width="24" height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M9 18V5l12-2v13"/>
+          <circle cx="6" cy="18" r="3"/>
+          <circle cx="18" cy="16" r="3"/>
+        </svg>
+        <!-- 播放中：小绿点 -->
+        <span class="music-dot" aria-hidden="true"></span>
+      </button>
+
       </div>
     </div>
   </div>
@@ -87,5 +112,65 @@ const footerLink1 = footerConf.links?.filter(({ pos }) => pos === 1) || []
     color: hsl(var(--foreground) / var(--un-text-opacity, 1));
     text-decoration: underline;
     font-weight: 500;
+  }
+
+/* ─── 音乐触发按钮 ─── */
+  .music-trigger-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: transparent;
+    color: hsl(var(--foreground) / var(--un-text-opacity, 1));
+    cursor: pointer;
+    border-radius: 0.25rem;
+    transition: color 0.2s ease, background 0.2s ease;
+    padding: 0;
+    outline: none;
+  }
+  .music-trigger-btn:hover {
+    color: hsl(var(--primary));
+  }
+  /* 小绿点 —— 默认隐藏 */
+  .music-dot {
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    width: 7px;
+    height: 7px;
+    background: #22c55e;
+    border-radius: 50%;
+    opacity: 0;
+    transform: scale(0);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    pointer-events: none;
+    /* 绿点带呼吸动画 */
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
+  }
+  /* 播放中：显示绿点 + 轻微脉冲 */
+  .music-trigger-btn.is-playing .music-dot {
+    opacity: 1;
+    transform: scale(1);
+    animation: dot-pulse 2s ease-in-out infinite;
+  }
+  /* 播放中：音符图标变为主色 */
+  .music-trigger-btn.is-playing {
+    color: hsl(var(--primary));
+  }
+  @keyframes dot-pulse {
+    0%, 100% {
+      box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
+    }
+    50% {
+      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0);
+    }
+  }
+  @media (prefers-reduced-motion) {
+    .music-trigger-btn.is-playing .music-dot {
+      animation: none;
+    }
   }
 </style>

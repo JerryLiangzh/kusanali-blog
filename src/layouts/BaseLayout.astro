@@ -3,12 +3,11 @@ import { Footer, Header, ThemeProvider } from 'astro-pure/components/basic'
 import type { SiteMeta } from 'astro-pure/types'
 import BaseHead from '@/components/BaseHead.astro'
 import config from '@/site-config'
-// import MusicPlayer from '@/components/MusicPlayer.astro'
 // Import the global.css file here so that it is included on
 // all pages through the use of the <BaseLayout /> component.
 import '@/assets/styles/global.css'
 import '@/assets/styles/app.css'
-// import { ClientRouter } from 'astro:transitions';
+import MusicPlayer from '@/components/MusicPlayer.astro'
 
 interface Props {
   meta: SiteMeta
@@ -26,7 +25,6 @@ const {
   <head>
     <BaseHead {articleDate} {description} {ogImage} {title} />
     <ThemeProvider />
-    {/* <ClientRouter /> */}
   </head>
 
   <body class='flex justify-center bg-background text-foreground' {...props}>
@@ -48,8 +46,8 @@ const {
       <div class='flex-1 w-full'>
         <slot />
       </div>
-      {/* <MusicPlayer /> */}
       <Footer />
+      <MusicPlayer />
     </div>
 
     {/* Set highlight color */}
