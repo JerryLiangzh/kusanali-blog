@@ -192,9 +192,9 @@ const STORAGE_KEY = 'music-player-state'
               send('play', { src: track.src, currentTime: currentTime })
             }
           } 
-        } {/* else {
+        } else {
             send('load', { src: playlist[0].src })
-          } */}
+          } 
         refreshUI()
         break
       case 'playing':
@@ -504,7 +504,14 @@ const STORAGE_KEY = 'music-player-state'
   updateTrackInfo(playlist[0])
 
   window.addEventListener('beforeunload', function () {
-    send('getState')
+    patchStorage({
+      isPlaying: isPlaying,
+      currentTime: currentTime,
+      duration: duration,
+      currentIndex: currentIndex,
+      playMode: playMode,
+      volume: volume
+    })
   })
 })()
 </script>
