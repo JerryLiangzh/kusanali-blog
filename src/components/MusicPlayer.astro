@@ -12,7 +12,7 @@ const STORAGE_KEY = 'music-player-state'
 
 <div id="music-player-panel" class="music-panel" aria-hidden="true">
   <div class="mp-track-info">
-    <img id="mp-cover" class="mp-cover" src="" alt="" />
+    <img id="mp-cover" class="mp-cover" src="" alt="cover of the current song" />
     <div class="mp-meta">
       <div id="mp-title" class="mp-song-title">—</div>
       <div id="mp-artist" class="mp-song-artist">—</div>
@@ -192,9 +192,9 @@ const STORAGE_KEY = 'music-player-state'
               send('play', { src: track.src, currentTime: currentTime })
             }
           } 
-        } else {
+        } {/* else {
             send('load', { src: playlist[0].src })
-          }
+          } */}
         refreshUI()
         break
       case 'playing':
@@ -332,10 +332,15 @@ const STORAGE_KEY = 'music-player-state'
     elTitle.textContent  = track.title  || '—'
     elArtist.textContent = track.artist || '—'
     if (track.cover) {
-      elCover.src = track.cover
+      elCover.dataset.src = track.cover
       elCover.style.display = 'block'
+      if (panel.classList.contains('open')) {
+        elCover.src = track.cover
+      }
     } else {
       elCover.style.display = 'none'
+      elCover.removeAttribute('src')
+      delete elCover.dataset.src
     }
   }
 
@@ -406,22 +411,33 @@ const STORAGE_KEY = 'music-player-state'
   //  面板开关
   function openPanel() {
     panel.classList.add('open')
+    panel.removeAttribute('inert')
     panel.setAttribute('aria-hidden', 'false')
+    if (elCover.dataset.src) {
+      elCover.src = elCover.dataset.src
+    }
     if (audioReady) send('getState')
   }
 
   function closePanel() {
     panel.classList.remove('open')
+    panel.setAttribute('inert', '')
     panel.setAttribute('aria-hidden', 'true')
     playlistOpen = false
     elPlaylist.classList.remove('open')
     elPlaylist.setAttribute('aria-hidden', 'true')
+    elPlaylist.setAttribute('inert', '')
   }
 
   function togglePlaylist() {
     playlistOpen = !playlistOpen
     elPlaylist.classList.toggle('open', playlistOpen)
     elPlaylist.setAttribute('aria-hidden', String(!playlistOpen))
+    if (playlistOpen) {
+      elPlaylist.removeAttribute('inert')
+    } else {
+      elPlaylist.setAttribute('inert', '')
+    }
   }
 
   window.__musicPlayer = { openPanel: openPanel, closePanel: closePanel }

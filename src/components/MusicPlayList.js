@@ -1,15 +1,15 @@
 export const playlist = [
-    { 
-        title: '未行之路 The Road Not Taken',
-        artist: 'HOYO-MiX & Aimer',
-        src: 'https://images.kusanali.top/hoyomix-and-aimer-the-road-not-taken.mp3',
-        cover: "https://images.kusanali.top/hoyomix-and-aimer-the-road-not-taken.jpg"
-    },
     {
         title: '净善的遐歌 Surasthana Fantasia',
         artist: 'HOYO-MiX',
         src: 'https://images.kusanali.top/hoyomix-surasthana-fantasia.mp3',
         cover: "https://images.kusanali.top/hoyomix-surasthana-fantasia.jpg"
+    },
+    { 
+        title: '未行之路 The Road Not Taken',
+        artist: 'HOYO-MiX & Aimer',
+        src: 'https://images.kusanali.top/hoyomix-and-aimer-the-road-not-taken.mp3',
+        cover: "https://images.kusanali.top/hoyomix-and-aimer-the-road-not-taken.jpg"
     },
     {
         title: '经过 Passing Memories',
