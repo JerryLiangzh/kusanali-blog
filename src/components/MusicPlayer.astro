@@ -10,7 +10,7 @@ const STORAGE_KEY = 'music-player-state'
   allow="autoplay"
 ></iframe>
 
-<div id="music-player-panel" class="music-panel" aria-hidden="true">
+<div id="music-player-panel" class="music-panel" aria-hidden="true" inert>
   <div class="mp-track-info">
     <img id="mp-cover" class="mp-cover" src="" alt="cover of the current song" />
     <div class="mp-meta">
@@ -106,7 +106,7 @@ const STORAGE_KEY = 'music-player-state'
     </div>
   </div>
 
-  <div id="mp-playlist" class="mp-playlist" aria-hidden="true"></div>
+  <div id="mp-playlist" class="mp-playlist" aria-hidden="true" inert></div>
 </div>
 
 <script is:inline define:vars={{ playlist, STORAGE_KEY }}>
