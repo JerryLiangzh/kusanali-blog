@@ -150,7 +150,7 @@ const STORAGE_KEY = 'music-player-state'
     try {
       switch (action) {
         case 'init': win.MusicFrame.init(); break
-        case 'play': win.MusicFrame.play(data.src, data.currentTime); break
+        case 'play': return win.MusicFrame.play(data.src, data.currentTime)
         case 'pause': win.MusicFrame.pause(); break
         case 'seek': win.MusicFrame.seek(data.currentTime); break
         case 'setVolume': win.MusicFrame.setVolume(data.volume); break
@@ -525,14 +525,7 @@ const STORAGE_KEY = 'music-player-state'
   updateTrackInfo(playlist[0])
 
   window.addEventListener('beforeunload', function () {
-    patchStorage({
-      isPlaying: isPlaying,
-      currentTime: currentTime,
-      duration: duration,
-      currentIndex: currentIndex,
-      playMode: playMode,
-      volume: volume
-    })
+    send('getState')
   })
 })()
 </script>
