@@ -195,9 +195,7 @@ const STORAGE_KEY = 'music-player-state'
               send('play', { src: track.src, currentTime: currentTime })
             }
           } 
-        } else {
-            send('load', { src: playlist[0].src })
-          } 
+        }  
         refreshUI()
         break
       case 'playing':
@@ -253,7 +251,7 @@ const STORAGE_KEY = 'music-player-state'
     if (retries > 0) {
       setTimeout(function () { waitForFrameReady(retries - 1) }, 50)
     } else {
-      console.warn('[MusicPlayer] iframe 握手超时')
+      console.warn('[MusicPlayer] iframe Retry timeout')
     }
   }
 

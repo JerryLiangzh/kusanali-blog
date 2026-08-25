@@ -43,7 +43,8 @@
             const raw = sessionStorage.getItem(STORAGE_KEY)
             if (raw) {
               const s = JSON.parse(raw)
-              if (s.src) {
+              // 只有"需要继续播放"才预载，保证微缝续播；暂停状态不下载
+              if (s.src && s.isPlaying) {
                 audio.src = s.src
                 if (s.currentTime) audio.currentTime = s.currentTime
                 if (typeof s.volume === 'number') audio.volume = s.volume
