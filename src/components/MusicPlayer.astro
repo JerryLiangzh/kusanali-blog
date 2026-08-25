@@ -146,16 +146,16 @@ const STORAGE_KEY = 'music-player-state'
   //  iframe 通信（直接调用同源 iframe 内的函数，保留用户手势）
   function send(action, data) {
     var win = frame.contentWindow
-    if (!win || !win.MusicFrame) return
+    if (!win || !win.MusicFrame) return Promise.resolve()
     try {
       switch (action) {
-        case 'init': win.MusicFrame.init(); break
+        case 'init': return win.MusicFrame.init()
         case 'play': return win.MusicFrame.play(data.src, data.currentTime)
-        case 'pause': win.MusicFrame.pause(); break
-        case 'seek': win.MusicFrame.seek(data.currentTime); break
-        case 'setVolume': win.MusicFrame.setVolume(data.volume); break
-        case 'load': win.MusicFrame.load(data.src); break
-        case 'getState': win.MusicFrame.getState(); break
+        case 'pause': return win.MusicFrame.pause()
+        case 'seek': return win.MusicFrame.seek(data.currentTime)
+        case 'setVolume': return win.MusicFrame.setVolume(data.volume)
+        case 'load': return win.MusicFrame.load(data.src)
+        case 'getState': return win.MusicFrame.getState()
       }
     } catch (e) { 
       console.error('[MusicPlayer] send error:', e) 
@@ -192,12 +192,7 @@ const STORAGE_KEY = 'music-player-state'
           if (wasPlaying) {
             var track = playlist[currentIndex]
             if (track) {
-              send('play', { src: track.src, currentTime: currentTime }).catch(function (err) {
-                console.warn('[MusicPlayer] 自动恢复播放被浏览器拦截:', err.message)
-                isPlaying = false
-                patchStorage({ isPlaying: false })
-                refreshUI()
-              })
+              send('play', { src: track.src, currentTime: currentTime })
             }
           } 
         } else {
@@ -237,6 +232,9 @@ const STORAGE_KEY = 'music-player-state'
         break
       case 'play-error':
         console.warn('[MusicPlayer] play error:', msg.message)
+        isPlaying = false
+        patchStorage({ isPlaying: false })
+        refreshUI()
         break
     }
   }
@@ -525,7 +523,22 @@ const STORAGE_KEY = 'music-player-state'
   updateTrackInfo(playlist[0])
 
   window.addEventListener('beforeunload', function () {
-    send('getState')
+    try {
+      var win = frame.contentWindow
+      // iframe 已销毁 → 它已写入，跳过
+      if (!win || !win.document) return          
+      var a = win.document.getElementById('audio')
+      // 同上
+      if (!a) return                              
+      patchStorage({
+        src: a.src || '',
+        currentTime: a.currentTime || 0,
+        isPlaying: !a.paused,
+        duration: a.duration || 0
+      })
+    } catch (_) {
+      // 读不到精确值 → 不写，绝不用过期镜像覆盖
+    }
   })
 })()
 </script>

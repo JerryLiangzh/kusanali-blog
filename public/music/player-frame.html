@@ -58,8 +58,9 @@
         },
 
         play: function (src, currentTime) {
-          if (src && src !== audio.src) {
-            audio.src = src
+          var abs = src ? new URL(src, location.href).href : null
+          if (abs && abs !== audio.src) {
+            audio.src = abs
           }
           if (typeof currentTime === 'number' && currentTime >= 0) {
             if (audio.readyState >= 1) {
