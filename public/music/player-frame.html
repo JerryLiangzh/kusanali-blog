@@ -46,6 +46,7 @@
               if (s.src) {
                 audio.src = s.src
                 if (s.currentTime) audio.currentTime = s.currentTime
+                if (s.duration) audio.duration = s.duration
                 if (typeof s.volume === 'number') audio.volume = s.volume
               }
               send('ready', { restored: !!s.src })

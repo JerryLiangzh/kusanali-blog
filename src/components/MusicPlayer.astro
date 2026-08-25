@@ -157,7 +157,10 @@ const STORAGE_KEY = 'music-player-state'
         case 'load': win.MusicFrame.load(data.src); break
         case 'getState': win.MusicFrame.getState(); break
       }
-    } catch (e) { console.error('[MusicPlayer] send error:', e) }
+    } catch (e) { 
+      console.error('[MusicPlayer] send error:', e) 
+      return Promise.reject(e)
+    }
   }
 
   // 接收 iframe 的状态上报（异步 postMessage 是安全的）
@@ -189,7 +192,12 @@ const STORAGE_KEY = 'music-player-state'
           if (wasPlaying) {
             var track = playlist[currentIndex]
             if (track) {
-              send('play', { src: track.src, currentTime: currentTime })
+              send('play', { src: track.src, currentTime: currentTime }).catch(function (err) {
+                console.warn('[MusicPlayer] 自动恢复播放被浏览器拦截:', err.message)
+                isPlaying = false
+                patchStorage({ isPlaying: false })
+                refreshUI()
+              })
             }
           } 
         } else {
@@ -235,8 +243,21 @@ const STORAGE_KEY = 'music-player-state'
 
   frame.addEventListener('load', function () {
     audioReady = false
-    setTimeout(function () { send('init') }, 30)
+    waitForFrameReady(12)
   })
+
+  function waitForFrameReady(retries) {
+    var win = frame.contentWindow
+    if (win && win.MusicFrame) {
+      send('init')
+      return
+    }
+    if (retries > 0) {
+      setTimeout(function () { waitForFrameReady(retries - 1) }, 50)
+    } else {
+      console.warn('[MusicPlayer] iframe 握手超时')
+    }
+  }
 
   //  播放控制
   function loadAndPlay(index, resumeTime) {
