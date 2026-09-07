@@ -45,7 +45,7 @@ const sharelink = 'https://kusanali.top'+Astro.url.pathname.replace(/(index)?\.h
   {/* title & link */}
   <div class='flex flex-col'>
     <div class='font-medium text-foreground'>{title}</div>
-    <div class='text-sm'>{sharelink}</div>
+    <div class='text-sm line-clamp-1'>{sharelink}</div>
   </div>
 
   {/* common info */}
@@ -101,7 +101,7 @@ const sharelink = 'https://kusanali.top'+Astro.url.pathname.replace(/(index)?\.h
             href={shares[share].link}
             target='_blank'
             id={`share-${share}`}
-            aria-label='Share'
+            aria-label={`Share to ${share}`}
             class='group rounded-full bg-muted p-1 text-muted-foreground transition-colors hover:text-primary sm:p-1.5'
           >
             <Icon class='size-5' name={share} />
