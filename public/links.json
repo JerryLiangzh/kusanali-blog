@@ -15,6 +15,102 @@
           "intro": "求知若愚，虚怀若谷",
           "link": "https://cworld0.com/",
           "avatar": "https://gravatar.loli.net/avatar/1ffe42aa45a6b1444a786b1f32dfa8aa?s=200"
+        },
+        {
+          "name": "花墨",
+          "intro": "好耶！是再花猫猫头ฅ•ω•ฅ",
+          "link": "https://flowersink.com",
+          "avatar": "https://api.flowersink.com/img/logo.png"
+        },
+        {
+          "name": "绅士喵",
+          "intro": "做自己感兴趣的事",
+          "link": "https://blog.hentioe.dev/",
+          "avatar": "https://blog.hentioe.dev/favicon-96x96.png"
+        },
+        {
+          "name": "张洪Heo",
+          "intro": "产品设计师，独立开发者，设计与科技分享",
+          "link": "https://blog.zhheo.com/",
+          "avatar": "https://p.zhheo.com/8DSTSS20990281646044689944.PNG!cover_mini"
+        },
+        {
+          "name": "Innei",
+          "intro": "Innei's personal blog on frontend and full-stack development — TypeScript, React, Next.js, AI engineering, indie hacking, travel and life.",
+          "link": "https://innei.ink/",
+          "avatar": "https://avatars.githubusercontent.com/u/41265413?v=5"
+        },
+        {
+          "name": "YuanRetro",
+          "intro": "这是一个成分复杂的小站哦~",
+          "link": "https://www.yuanshen.dev/",
+          "avatar": "https://www.yuanshen.dev/img/nahida.png"
+        },
+        {
+          "name": "❖星港◎Star☆",
+          "intro": "以博客记录生活与热爱！",
+          "link": "https://blog.starsharbor.com/",
+          "avatar": "https://bu.dusays.com/2025/04/11/67f92f6fcfb26.webp"
+        },
+        {
+          "name": "Elykia",
+          "intro": "致以无瑕之人",
+          "link": "https://blog.elykia.cn/",
+          "avatar": "https://bu.dusays.com/2024/10/25/671b2438203a6.gif"
+        },
+        {
+          "name": "TimochanのBlog",
+          "intro": "Let's start learning",
+          "link": "https://www.timochan.cn/",
+          "avatar": "https://www.timochan.cn/api/objects/icon/9s6tbcvax674yv2m88.jpg"
+        },
+        {
+          "name": "纳西妲的个人网站",
+          "intro": "为世界上一切美好而战！",
+          "link": "https://nahida.im/",
+          "avatar": "https://img.nahida.love/profile.png"
+        },
+        {
+          "name": "世界第一可爱",
+          "intro": "一个专注于设计思考与生活探索的独立博客",
+          "link": "https://www.nahida.cn/",
+          "avatar": "https://www.nahida.cn/upload/b5cea561-e0a9-4635-a4c8-1cee6814fdfd.png?width=1600"
+        },
+        {
+          "name": "Axi's Blog",
+          "intro": "一只可爱小猫",
+          "link": "https://axi404.top",
+          "avatar": "https://axi404.top/avatar/avatar.png"
+        },
+        {
+          "name": "猫球博客",
+          "intro": "一个非常有趣的博客",
+          "link": "https://limaoqiu.com/i",
+          "avatar": "https://limaoqiu.com/favicon.ico"
+        },
+        {
+          "name": "XiaoCai's Blog",
+          "intro": "记录小菜日常的折腾。",
+          "link": "https://blog.ixiaocai.net/",
+          "avatar": "https://blog.ixiaocai.net/assets/avatars/250x250.webp"
+        },
+        {
+          "name": "snows_l's Blog",
+          "intro": "小得盈满！",
+          "link": "https://snows-l.site",
+          "avatar": "https://q1.qlogo.cn/g?b=qq&nk=37523953&s=640"
+        },
+        {
+          "name": "Pinpe 的云端",
+          "intro": "一片属于自己的云朵。",
+          "link": "https://pinpe.top",
+          "avatar": "https://pinpe.top/head.jpg"
+        },
+        {
+          "name": "Cyberia",
+          "intro": "Across the Great Wall we can reach every corner in the world",
+          "link": "https://nptr.cc/",
+          "avatar": "https://nptr.cc/_astro/avatar.BuKmwbRZ_1uxdir.avif"
         }
       ]
     },
