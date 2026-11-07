@@ -1,9 +1,9 @@
 ---
 
-title: '建站存档点 - 2'
+title: '告别LeanCloud'
 publishDate: 2026-02-02
 updatedDate: 2026-02-17
-description: '建站记录之从LeanCloud向MongoDB迁移'
+description: '从LeanCloud向MongoDB迁移'
 author: 'Jerry Liangzh'
 tags: ["建站", "mongodb", "waline", "vercel"]
 featured: false
@@ -63,6 +63,6 @@ Custom Roles就选刚刚创建好的那一个，还需要`Restrict Access to Spe
 
 ## 其他注意事项
 
-配置数据库时，最好在`Project` - `Security` - `Database & Network Access` - `IP Access List`里添加允许访问的IP为`0.0.0.0/0`，即允许所有IP访问，可以避免不少麻烦。
+配置数据库时，如果图省事，在`Project` - `Security` - `Database & Network Access` - `IP Access List`里添加允许访问的IP为`0.0.0.0/0`，即允许所有IP访问，可以避免不少麻烦。
 
 当然，也有一种据称相对省事的部署办法，就是在Vercel里相应Project下的Storage子项选择`Create a database` – `MongoDB Atlas`，IP Access List以及Cluster创建等等即可一键完成。但据我所试，其实也没有那么省事，一键之后，同样需要创建数据库用户、用户权限组，以及通过Compass获取相应URI，否则就会提示`500: Not initialized`——因为没有创建用户，`Cluster` - `Browse Collections`里看不到`waline/Users`。

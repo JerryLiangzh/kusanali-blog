@@ -1,9 +1,9 @@
 ---
 
-title: '建站存档点 - 1'
+title: '建站存档点'
 publishDate: 2025-11-16
 updatedDate: 2026-02-24
-description: '建站记录'
+description: '建站小记'
 author: 'Jerry Liangzh'
 tags: ["建站", "cloudflare", "waline", "umami", "piclist"]
 featured: false
@@ -32,7 +32,7 @@ waline的引入我并不局限于简单的构建使用，而是额外参考了[A
 
 umami则见[umami官方文档](https://umami.is/docs)与[关于页数据统计接入自建umami](https://blog.starsharbor.com/posts/solitude-about_umami/)。
 
-**2026.02.02 Update**：实现了MongoDB的部署，由于篇幅原因，单开一篇，详见[建站存档点 - 2](https://kusanali.top/blog/website-archive-point-2)。
+**2026.02.02 Update**：实现了MongoDB的部署，由于篇幅原因，单开一篇，详见[告别LeanCloud](https://kusanali.top/blog/say-goodbye-to-leancloud)。
 
 **2026.02.24 Update**：解决了waline的浏览量、评论数统计功能不可用的问题。由于篇幅原因，单开一篇，详见[博客中的URL配置](https://kusanali.top/blog/blog-url-configuration)。
 

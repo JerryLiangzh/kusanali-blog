@@ -1,11 +1,12 @@
 # Kusanali Blog
 
-English | [简体中文](./README-zh-CN.md)
-
+这是我的个人博客，使用 Astro 构建，所使用模版为 [Astro Theme Pure](https://github.com/cworld1/astro-theme-pure)。<br>
 My personal blog is built using Astro, and the template used is [Astro Theme Pure](https://github.com/cworld1/astro-theme-pure).
 
+欢迎访问 [Kusanali Blog](https://kusanali.top)！<br>
 Welcome to [Kusanali Blog](https://kusanali.top)!
 
 ## 📜 License
 
+所有博客文本内容以 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) 协议发布。<br>
 All blog text content is published under the [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) license.
