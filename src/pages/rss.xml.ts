@@ -1,3 +1,4 @@
+// 本文件负责生成网站的 RSS 订阅源
 import type { AstroGlobal, ImageMetadata } from 'astro'
 import { getImage } from 'astro:assets'
 import type { CollectionEntry } from 'astro:content'

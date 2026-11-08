@@ -14,6 +14,8 @@ const blog = defineCollection({
   // Load Markdown and MDX files in the `src/content/blog/` directory.
   loader: glob({ base: './src/content/blog', pattern: '**/*.{md,mdx}' }),
   // Required
+  // 规定一篇博客文章可以有哪些字段，以及字段是否必填
+  // 只负责“检查数据是否合法”，不负责排序，也不负责页面显示
   schema: ({ image }) =>
     z.object({
       // Required

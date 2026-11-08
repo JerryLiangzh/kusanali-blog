@@ -1,4 +1,5 @@
 ---
+// 本文件负责渲染文章详情页，是文章详情页的布局组装器
 import type { MarkdownHeading } from 'astro'
 import type { CollectionEntry } from 'astro:content'
 
@@ -41,6 +42,8 @@ const socialImage = heroImage
     ? heroImage.src
     : heroImage.src.src
   : config.socialCard
+// 准备一个名叫 articleDate 的变量，传给更外层的布局
+// 不是控制页面上肉眼看到的日期，而是在准备交给HTML <head>的元数据。肉眼看到的日期仍由Hero.astro负责
 const articleDate = updatedDate?.toISOString() ?? publishDate.toISOString()
 const primaryColor = data.heroImage?.color ?? 'hsl(var(--primary) / var(--un-text-opacity))'
 ---

@@ -1,3 +1,6 @@
+// 本文件即一组后台数据处理函数，本身不显示任何页面
+// 排序和归档年份是在这里决定的，但日期最终长什么样不是这里负责
+// 主页与/blog列表、/archives列表（年间、年内）的文章排序由此决定，目前按publishDate降序排列
 import { getCollection, type CollectionEntry, type CollectionKey } from 'astro:content'
 
 type Collections = CollectionEntry<CollectionKey>[]
@@ -5,6 +8,7 @@ type Collections = CollectionEntry<CollectionKey>[]
 export const prod = import.meta.env.PROD
 
 /** Note: this function filters out draft posts based on the environment */
+// 获取文章集合，并在生产环境过滤草稿
 export async function getBlogCollection<T extends CollectionKey = 'blog'>(
   contentType: T = 'blog' as T
 ) {
@@ -14,10 +18,14 @@ export async function getBlogCollection<T extends CollectionKey = 'blog'>(
   })
 }
 
+// getYearFromCollection()决定文章属于哪年。旧写法让文章在更新后有机会于/archives页面迁移到新的年份
+// groupCollectionsByYear()按年份给文章分组，并将年份按从新到旧排列，供/archives页使用
 function getYearFromCollection<T extends CollectionKey>(
   collection: CollectionEntry<T>
 ): number | undefined {
-  const dateStr = collection.data.updatedDate ?? collection.data.publishDate
+  // Old method: 
+  // const dateStr = collection.data.updatedDate ?? collection.data.publishDate
+  const dateStr = collection.data.publishDate
   return dateStr ? new Date(dateStr).getFullYear() : undefined
 }
 export function groupCollectionsByYear<T extends CollectionKey>(
@@ -39,6 +47,7 @@ export function groupCollectionsByYear<T extends CollectionKey>(
   ).sort((a, b) => b[0] - a[0])
 }
 
+// sortMDByDate()函数用于对文章进行排序，优先级为：pin > publishDate，非pinned文章按publishDate降序排列
 export function sortMDByDate<T extends CollectionKey>(
   collections: CollectionEntry<T>[]
 ): CollectionEntry<T>[] {

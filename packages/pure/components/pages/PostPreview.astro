@@ -1,4 +1,6 @@
 ---
+// 本文件负责渲染一条文章预览，也就是主页或 /blog 列表中的一篇文章
+// 主页与/blog列表、/archives列表（年间、年内）的文章日期外显由此决定
 import type { ImageMetadata } from 'astro'
 import { Image } from 'astro:assets'
 import { render, type CollectionEntry, type CollectionKey } from 'astro:content'
@@ -15,6 +17,7 @@ type Props<T extends CollectionKey> = {
 const { post, detailed = false, class: className } = Astro.props
 const { id, data } = post
 const { remarkPluginFrontmatter } = await render(post)
+// 只决定这张文章卡片上显示哪个日期。它不负责排序
 const postDate = data.updatedDate ?? data.publishDate
 type PreviewMetadata = {
   heroImage?: {

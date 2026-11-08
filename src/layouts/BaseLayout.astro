@@ -1,4 +1,6 @@
 ---
+// 本文件负责整个网站最外层的 HTML 结构
+// BlogPost.astro 准备好的 articleDate，会经过它继续传给 BaseHead.astro。它自己不判断该用发布日期还是更新日期
 import { Footer, Header, ThemeProvider } from 'astro-pure/components/basic'
 import type { SiteMeta } from 'astro-pure/types'
 import BaseHead from '@/components/BaseHead.astro'

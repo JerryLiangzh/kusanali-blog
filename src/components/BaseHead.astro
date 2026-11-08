@@ -1,4 +1,5 @@
 ---
+// 本文件负责渲染HTML <head>内含的元数据
 import { Font } from 'astro:assets'
 
 import { prod } from 'astro-pure/server'
@@ -51,6 +52,7 @@ const socialImageURL = new URL(ogImage ? ogImage : config.socialCard, Astro.url)
 <meta name='color-scheme' content='light dark' />
 
 {/* Open Graph / Facebook */}
+{/* 写给搜索引擎、社交平台等程序读取的，不会在文章页面上直接显示 */}
 <meta content={articleDate ? 'article' : 'website'} property='og:type' />
 <meta content={title} property='og:title' />
 <meta content={description} property='og:description' />
