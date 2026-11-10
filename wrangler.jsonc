@@ -1,0 +1,11 @@
+{
+  "name": "kusanali-blog",
+  "compatibility_date": "2026-11-10",
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  }
+}
