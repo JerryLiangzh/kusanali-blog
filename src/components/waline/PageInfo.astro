@@ -10,7 +10,7 @@ interface Props {
 
 const { comment, class: className, ...props } = Astro.props
 
-const path = Astro.url.pathname
+const path = Astro.url.pathname.replace(/(index)?\.html$/, '')
 ---
 
 <div
